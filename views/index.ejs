@@ -34,23 +34,48 @@
           Menu
           <i class="fa fa-bars"></i>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarResponsive">
+
+          <%
+          if(IsLog != true ) {
+          %>
             <div class="offset-3 col-8">
+
               <form class="" action="/login" method="post">
-                <input type="text" class="btn btn-outline-dark" name="" placeholder="User Name" value="">
-                <input type="password" class="btn btn-outline-dark" name="" placeholder="Password" value="">
+                <input type="text" class="btn btn-outline-dark" name="name" placeholder="User Name" value="">
+                <input type="password" class="btn btn-outline-dark" name="password" placeholder="Password" value="">
                 <button type="submit" name="button" class="btn btn-dark">login</button>
               </form>
+
             </div>
+            <%
+          } else {
+            %>
+              <h1 class="mb-0">MNPooL</h1>
+            <%  }%>
           <ul class="navbar-nav ml-auto">
 
             <li class="nav-item mx-0 mx-lg-1">
+
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Ads</a>
             </li>
+            <%
+            if(IsLog != true) {
+            %>
             <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/signUp">Signup</a>
-
             </li>
+            <%
+          } else {
+            %>
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/profile">portfolio</a>
+            </li>
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/logout">logout</a>
+            </li>
+            <%  }%>
           </ul>
         </div>
       </div>
@@ -60,7 +85,15 @@
 <header class="masthead bg-primary text-white text-center">
  <div class="container">
   <img class="img-fluid mb-5 d-block mx-auto" id="mainLogo" src="/img/logo_mnp/MNP-01v3.png" alt="">
+  <%
+  if(IsLog != true) {
+  %>
   <h1 class="mb-0">MNPooL</h1>
+  <%
+} else {
+  %>
+  <h1 class="mb-0">MasterNode PooL</h1>
+    <%  }%>
   <hr class="star-light">
   <h2 class="font-weight-light mb-0">Find.Set.Share()</h2>
  </div>
