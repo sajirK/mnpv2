@@ -29,7 +29,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="/img/logo_mnp/MNP-01v2.png" id="logo"></a>
+        <a class="navbar-brand js-scroll-trigger"><img src="/img/logo_mnp/MNP-01v2.png" id="logo"></a>
         <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
@@ -101,6 +101,7 @@
     <!-- Portfolio Grid Section -->
 
     <section class="portfolio" id="portfolio">
+      <div class="container">
       <div class="row">
 
         <!-- add a new ad button -->
@@ -110,9 +111,15 @@
     </div> -->
 
       </div>
-      <div class="container">
+
         <h2 class="text-center text-uppercase text-secondary mb-0">New ads :</h2>
         <hr class="star-dark mb-5">
+
+
+        <%
+  for(var i=0; i<dataAd.length; i++) {
+  %>
+  <a href="/cardAds?id=<%=dataAd[i]._id%>">
         <div class="row">
           <div class="offset-1 col-10">
             <div class="card text-center">
@@ -135,10 +142,10 @@
               <div class="card-header">
                 <div class="row">
                 <div class="col-3">
-                  L U X
+                  <%=dataAd[i].crypto%>
                 </div>
                 <div class="col-3">
-                  10
+                  <%=dataAd[i].NbSeat%>
                 </div>
                 <div class="col-3">
                   248%
@@ -149,8 +156,8 @@
                 </div>
               </div>
               <div class="card-body">
-                <h5 class="card-title">I propose a shared LUX node</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                <h5 class="card-title"><%=dataAd[i].title%></h5>
+                <p class="card-text"><%=dataAd[i].message%></p>
                 <a href="/postAds" class="btn btn-primary">Reserve</a>
               </div>
               <div class="card-footer text-muted">
@@ -159,190 +166,11 @@
             </div>
           </div>
           </div>
-          <div class="row">
-            <div class="offset-1 col-10">
-              <div class="card text-center">
-                <div class="card-header">
-                  <div class="row">
-                  <div class="col-3">
-                    Crypto
+          </a>
+         <%}%>
                   </div>
-                  <div class="col-3">
-                    Seat
-                  </div>
-                  <div class="col-3">
-                    ROI
-                  </div>
-                  <div class="col-3">
-                    Price
-                  </div>
-                  </div>
-                </div>
-                <div class="card-header">
-                  <div class="row">
-                  <div class="col-3">
-                    L U X
-                  </div>
-                  <div class="col-3">
-                    10
-                  </div>
-                  <div class="col-3">
-                    248%
-                  </div>
-                  <div class="col-3">
-                    336$
-                  </div>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">I propose a shared ALQO node</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                  <a href="#" class="btn btn-primary">Order</a>
-                </div>
-                <div class="card-footer text-muted">
-                  2 days ago
-                </div>
-              </div>
-            </div>
-            </div>
-            <div class="row">
-              <div class="offset-1 col-10">
-                <div class="card text-center">
-                  <div class="card-header">
-                    <div class="row">
-                    <div class="col-3">
-                      Crypto
-                    </div>
-                    <div class="col-3">
-                      Seat
-                    </div>
-                    <div class="col-3">
-                      ROI
-                    </div>
-                    <div class="col-3">
-                      Price
-                    </div>
-                    </div>
-                  </div>
-                  <div class="card-header">
-                    <div class="row">
-                    <div class="col-3">
-                      L U X
-                    </div>
-                    <div class="col-3">
-                      10
-                    </div>
-                    <div class="col-3">
-                      248%
-                    </div>
-                    <div class="col-3">
-                      336$
-                    </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">I propose a shared SMART node</h5>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                    <a href="#" class="btn btn-primary">Order</a>
-                  </div>
-                  <div class="card-footer text-muted">
-                    2 days ago
-                  </div>
-                </div>
-              </div>
-              </div>
-              <div class="row">
-                <div class="offset-1 col-10">
-                  <div class="card text-center">
-                    <div class="card-header">
-                      <div class="row">
-                      <div class="col-3">
-                        Crypto
-                      </div>
-                      <div class="col-3">
-                        Seat
-                      </div>
-                      <div class="col-3">
-                        ROI
-                      </div>
-                      <div class="col-3">
-                        Price
-                      </div>
-                      </div>
-                    </div>
-                    <div class="card-header">
-                      <div class="row">
-                      <div class="col-3">
-                        L U X
-                      </div>
-                      <div class="col-3">
-                        10
-                      </div>
-                      <div class="col-3">
-                        248%
-                      </div>
-                      <div class="col-3">
-                        336$
-                      </div>
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">I propose a shared SUB1X node</h5>
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                      <a href="#" class="btn btn-primary">Order</a>
-                    </div>
-                    <div class="card-footer text-muted">
-                      2 days ago
-                    </div>
-                  </div>
-                </div>
-                </div>
-                <div class="row">
-                  <div class="offset-1 col-10">
-                    <div class="card text-center">
-                      <div class="card-header">
-                        <div class="row">
-                        <div class="col-3">
-                          Crypto
-                        </div>
-                        <div class="col-3">
-                          Seat
-                        </div>
-                        <div class="col-3">
-                          ROI
-                        </div>
-                        <div class="col-3">
-                          Price
-                        </div>
-                        </div>
-                      </div>
-                      <div class="card-header">
-                        <div class="row">
-                        <div class="col-3">
-                          L U X
-                        </div>
-                        <div class="col-3">
-                          10
-                        </div>
-                        <div class="col-3">
-                          248%
-                        </div>
-                        <div class="col-3">
-                          336$
-                        </div>
-                        </div>
-                      </div>
-                      <div class="card-body">
-                        <h5 class="card-title">I propose a shared 1up node</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                        <a href="#" class="btn btn-primary">Order</a>
-                      </div>
-                      <div class="card-footer text-muted">
-                        2 days ago
-                      </div>
-                    </div>
-                  </div>
-                  </div>
+
+
                   </section>
 
     <!-- Footer -->
@@ -405,136 +233,7 @@
       </a>
     </div>
     <!-- Portfolio Modal 1 -->
-    <!-- <div class="portfolio-modal mfp-hide" id="portfolio-modal-1">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Lux MasterNode</h2>
-              <hr class="star-dark mb-5">
-              <h3 > LUX</h3>
-              <p class="mb-5">bonjours, je set up une MasterNode LUX</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
-    <!-- Portfolio Modal 2 -->
-    <!-- <div class="portfolio-modal mfp-hide" id="portfolio-modal-2">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
-              <hr class="star-dark mb-5">
-
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- Portfolio Modal 3 -->
-    <!-- <div class="portfolio-modal mfp-hide" id="portfolio-modal-3">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
-              <hr class="star-dark mb-5">
-              <img class="img-fluid mb-5" src="img/portfolio/circus.png" alt="">
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- Portfolio Modal 4 -->
-    <!-- <div class="portfolio-modal mfp-hide" id="portfolio-modal-4">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
-              <hr class="star-dark mb-5">
-              <img class="img-fluid mb-5" src="img/portfolio/game.png" alt="">
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- Portfolio Modal 5 -->
-    <!-- <div class="portfolio-modal mfp-hide" id="portfolio-modal-5">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
-              <hr class="star-dark mb-5">
-              <img class="img-fluid mb-5" src="img/portfolio/safe.png" alt="">
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- Portfolio Modal 6 -->
-    <!-- <div class="portfolio-modal mfp-hide" id="portfolio-modal-6">
-      <div class="portfolio-modal-dialog bg-white">
-        <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
-          <i class="fa fa-3x fa-times"></i>
-        </a>
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
-              <hr class="star-dark mb-5">
-              <img class="img-fluid mb-5" src="img/portfolio/submarine.png" alt="">
-              <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-              <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
-                <i class="fa fa-close"></i>
-                Close Project</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>

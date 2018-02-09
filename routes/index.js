@@ -36,9 +36,14 @@ var AdModel = mongoose.model('annonce', AdSchema);
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-  console.log(req.session.IsLog);
-  res.render('index', { IsLog: req.session.IsLog});
+
+  AdModel.find(function(error, dataAd){
+  req.session.dataAd = dataAd;
+  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
 });
+  })
+
+
 
 
 
@@ -113,6 +118,18 @@ router.post('/ad', function(req, res, next) {
 });
 
 
+router.get('/cardAds', function(req, res, next) {
+  AdModel.find(
+    {_id : req.query.id},
+    function(err, oneAd){
+      console.log(oneAd);
+        res.render('Ads', {dataAd: oneAd[0]});
+    })
+
+});
+
+
+
 // login
 router.post('/login', function(req, res, next) {
   UserModel.find(
@@ -166,4 +183,5 @@ router.get('/logout', function(req, res, next) {
     res.render('profile',{IsLog: req.session.IsLog, avatar:req.files.avatar});
   });
 });
+
 module.exports = router;
