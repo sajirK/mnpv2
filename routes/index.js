@@ -36,9 +36,8 @@ var AdModel = mongoose.model('annonce', AdSchema);
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-  res.render('index', {
-    title: 'Express'
-  });
+  console.log(req.session.IsLog);
+  res.render('index', { IsLog: req.session.IsLog});
 });
 
 
@@ -71,8 +70,7 @@ router.post('/signup', function(req, res, next) {
                 user_id: req.session.user._id
               },
               function(error) {
-                res.render('index', {
-                });
+                res.render('index', {IsLog});
               }
             )
           }
@@ -85,9 +83,7 @@ router.post('/signup', function(req, res, next) {
 
 // Get new ad page
 router.get('/postAds', function(req, res, next) {
-  res.render('postAds', {
-
-  });
+  res.render('postAds');
 });
 
 
@@ -109,11 +105,65 @@ router.post('/ad', function(req, res, next) {
       // res.render('index');
       AdModel.find(
         function(err, annonce) {
-          res.render('index');
+          res.render('index',{IsLog: req.session.IsLog});
         }
       )
 
     });
 });
 
+
+// login
+router.post('/login', function(req, res, next) {
+  UserModel.find(
+      { name: req.body.name, password: req.body.password} ,
+      function (err, users) {
+        if(users.length > 0) {
+          req.session.user = users[0];
+          req.session.IsLog = true;
+          AdModel.find(
+               // {user_id: req.session.user._id},
+               function (error,annonce) {
+                 console.log(annonce);
+                 console.log(req.session.IsLog);
+                 res.render('index', {IsLog:req.session.IsLog, annonce, user : req.session.user });
+               }
+           )
+        } else {
+          req.session.IsLog = false;
+          console.log(req.session.IsLog);
+          res.render('index', {IsLog: req.session.IsLog});
+        }
+      }
+  )
+
+});
+
+// Logout
+router.get('/logout', function(req, res, next) {
+  req.session.IsLog = false;
+
+  res.render('index', {IsLog: req.session.IsLog});
+})
+
+ // Get Edit My Profile page
+ router.get('/profile', function(req, res, next) {
+   res.render('profile');
+ })
+ // file upload
+ router.post('/upload', function(req, res) {
+  if (!req.files) {
+    return res.status(400).send('No files were uploaded.');
+     }
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  let avatar = req.files.avatar;
+
+  // Use the mv() method to place the file somewhere on your server
+  avatar.mv('./img', function(err) {
+    if (err) {
+      return res.status(500).send(err);
+         }
+    res.render('profile',{IsLog: req.session.IsLog, avatar:req.files.avatar});
+  });
+});
 module.exports = router;
