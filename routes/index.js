@@ -159,7 +159,7 @@ router.post('/login', function(req, res, next) {
           console.log(req.session.IsLog);
           res.render('index', {IsLog: req.session.IsLog});
         }
-
+  });
 });
 
 // Logout
