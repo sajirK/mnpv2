@@ -101,7 +101,7 @@ hr.star-dark:after {
 }
 
 section {
-  padding: 6rem 0;
+  padding: 3rem 0;
 }
 
 section h2 {
@@ -478,4 +478,8 @@ a.btn-dark:hover, .btn-dark:focus, .btn-dark:active {
 #messageAd {
   display: flex;
   justify-content: center;
+}
+
+#searchBar{
+  margin-bottom: 40px;
 }

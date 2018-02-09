@@ -190,4 +190,9 @@ router.get('/logout', function(req, res, next) {
   });
 });
 
+router.post('/search', function(req, res){
+console.log(req.session.dataAd);
+res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
+});
+
 module.exports = router;
