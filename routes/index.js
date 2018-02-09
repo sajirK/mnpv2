@@ -36,49 +36,62 @@ var AdModel = mongoose.model('annonce', AdSchema);
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-  console.log(req.session.IsLog);
-  res.render('index', { IsLog: req.session.IsLog});
+
+  AdModel.find(function(error, dataAd){
+  req.session.dataAd = dataAd;
+  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
 });
+  })
+
+
 
 
 
 // GET Signup page
 router.get('/signUp', function(req, res, next) {
-  res.render('signUp', {
-    title: 'Express'
-  });
+  res.render('signUp', {title: 'Express'});
 });
 
    // user form database
-router.post('/signup', function(req, res, next) {
+router.post('/signUp', function(req, res, next) {
+if (req.body.password == req.body.confirm) {
 
-  UserModel.find({
-      email: req.body.email
-    },
+
+  UserModel.find(
+    {email: req.body.email},
     function(err, users) {
       if (users.length == 0) {
 
         var newUser = new UserModel({
-          name: req.body.name,
+          name: req.body.username,
           email: req.body.email,
           password: req.body.password
         });
+        console.log(newUser);
         newUser.save(
           function(error, user) {
             req.session.user = user;
-            UserModel.find({
-                user_id: req.session.user._id
-              },
-              function(error) {
-                res.render('index', {IsLog});
+
+            req.session.IsLog = true;
+            console.log(req.session.IsLog);
+                res.render('index', {});
+                        }
+                      )
+                        }else {
+                      req.session.IsLog = false;
+                      console.log(req.session.IsLog);
+                      res.render('signUp',{});
+                    }
+                  }
+                )
+              }else {
+                req.session.IsLog = false;
+                console.log(req.session.IsLog);
+                res.render('signUp',{});
+
               }
-            )
-          }
-        );
-      }
-    }
-  );
-});
+              }
+              );
 
 
 // Get new ad page
@@ -113,6 +126,18 @@ router.post('/ad', function(req, res, next) {
 });
 
 
+router.get('/cardAds', function(req, res, next) {
+  AdModel.find(
+    {_id : req.query.id},
+    function(err, oneAd){
+      console.log(oneAd);
+        res.render('Ads', {dataAd: oneAd[0]});
+    })
+
+});
+
+
+
 // login
 router.post('/login', function(req, res, next) {
   UserModel.find(
@@ -134,8 +159,6 @@ router.post('/login', function(req, res, next) {
           console.log(req.session.IsLog);
           res.render('index', {IsLog: req.session.IsLog});
         }
-      }
-  )
 
 });
 
@@ -166,4 +189,5 @@ router.get('/logout', function(req, res, next) {
     res.render('profile',{IsLog: req.session.IsLog, avatar:req.files.avatar});
   });
 });
+
 module.exports = router;
