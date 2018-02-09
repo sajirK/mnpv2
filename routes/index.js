@@ -74,7 +74,7 @@ if (req.body.password == req.body.confirm) {
 
             req.session.IsLog = true;
             console.log(req.session.IsLog);
-                res.render('index', {});
+                res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
                         }
                       )
                         }else {
@@ -118,7 +118,7 @@ router.post('/ad', function(req, res, next) {
       // res.render('index');
       AdModel.find(
         function(err, annonce) {
-          res.render('index',{IsLog: req.session.IsLog});
+          res.render('index',{dataAd: req.session.dataAd, IsLog: req.session.IsLog});
         }
       )
 
@@ -151,13 +151,13 @@ router.post('/login', function(req, res, next) {
                function (error,annonce) {
                  console.log(annonce);
                  console.log(req.session.IsLog);
-                 res.render('index', {IsLog:req.session.IsLog, annonce, user : req.session.user });
+                 res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, annonce, user : req.session.user });
                }
            )
         } else {
           req.session.IsLog = false;
           console.log(req.session.IsLog);
-          res.render('index', {IsLog: req.session.IsLog});
+          res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
         }
   });
 });
@@ -166,7 +166,7 @@ router.post('/login', function(req, res, next) {
 router.get('/logout', function(req, res, next) {
   req.session.IsLog = false;
 
-  res.render('index', {IsLog: req.session.IsLog});
+  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
 })
 
  // Get Edit My Profile page
