@@ -1,3 +1,15 @@
+/* my profile img */
+.avatar{
+ border-radius: 50%;
+height: 100px;
+width: 100px;
+}
+
+/* MNPool header */
+h1{
+  color: white;
+}
+
 #head{
   color: white;
 }
@@ -380,12 +392,13 @@ a:focus, a:hover, a:active {
   border-width: 2px;
 }
 
+/* the green background */
 .bg-primary {
   background-color: #18BC9C !important;
 }
 
 .bg-secondary {
-  background-color: #2C3E50 !important;
+  background-color: #2c3e50 !important;
 }
 
 .text-primary {
@@ -393,11 +406,12 @@ a:focus, a:hover, a:active {
 }
 
 .text-secondary {
-  color: #2C3E50 !important;
+  color: #2c3e50 !important;
 }
 
+/* button */
 .btn-outline-dark {
-  background-color: #2c3e50;
+  background-color: white;
   border-color: #18BC9C;
 }
 
@@ -450,4 +464,18 @@ a.btn-dark:hover, .btn-dark:focus, .btn-dark:active {
   margin-top: 60px;
   margin-bottom: 60px;
   width: 100%;
+}
+
+#cardAdMarginTop {
+  margin-top: 60px;
+}
+
+#titleAd {
+  display: flex;
+  justify-content: center;
+}
+
+#messageAd {
+  display: flex;
+  justify-content: center;
 }
