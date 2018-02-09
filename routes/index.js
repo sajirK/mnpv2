@@ -36,10 +36,15 @@ var AdModel = mongoose.model('annonce', AdSchema);
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-  res.render('index', {
-    title: 'Express'
-  });
+  AdModel.find(function(error, dataAd){
+console.log(dataAd);
+  req.session.dataAd = dataAd;
+  console.log(req.session.dataAd);
+  res.render('index', {dataAd: req.session.dataAd});
 });
+  })
+
+
 
 
 
@@ -114,6 +119,16 @@ router.post('/ad', function(req, res, next) {
       )
 
     });
+});
+
+router.get('/cardAds', function(req, res, next) {
+  AdModel.find(
+    {_id : req.query.id},
+    function(err, oneAd){
+      console.log(oneAd);
+        res.render('Ads', {dataAd: oneAd[0]});
+    })
+
 });
 
 module.exports = router;

@@ -451,3 +451,17 @@ a.btn-dark:hover, .btn-dark:focus, .btn-dark:active {
   margin-bottom: 60px;
   width: 100%;
 }
+
+#cardAdMarginTop {
+  margin-top: 60px;
+}
+
+#titleAd {
+  display: flex;
+  justify-content: center;
+}
+
+#messageAd {
+  display: flex;
+  justify-content: center;
+}
