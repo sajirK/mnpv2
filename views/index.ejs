@@ -85,6 +85,15 @@
     <!-- Header -->
 <header class="masthead bg-primary text-white text-center">
  <div class="container">
+   <%
+   if(IsLog == true) {
+     %>
+   <div class="row">
+     <div class="offset-7 col-5">
+         <h5>Welcome <%=user.name%></h5>
+     </div>
+   </div>
+   <%}%>
   <img class="img-fluid mb-5 d-block mx-auto" id="mainLogo" src="/img/logo_mnp/MNP-01v3.png" alt="">
   <%
   if(IsLog != true) {
@@ -103,24 +112,34 @@
 
     <section class="portfolio" id="portfolio">
       <div class="container">
-      <div class="row">
 
-        <!-- add a new ad button -->
-
-            <!-- <div class="offset-7 col-3 ">
-          <a type="button" class="btn btn-dark" href="/postAds">New</a>
-    </div> -->
-
-      </div>
 
         <h2 class="text-center text-uppercase text-secondary mb-0">New ads :</h2>
         <hr class="star-dark mb-5">
-
+        <div class="row">
+          <div class="col-9">
+            <h3 class="text-secondary mb-0">Here we have <%=dataAd.length%> ads</h3>
+          </div>
+          <%
+          if (IsLog == true) {
+            %>
+          <div class="col-3">
+            <a class="btn btn-dark" href="/postAds">New</a>
+            </div>
+            <%}%>
+          </div>
+          <div class="row" id="searchBar">
+    <div class="offset-1 col-4 padding-left" >
+             <form class="form" action="/search" method="post">
+             <input type="text" name="search" class="btn btn-outline-dark" value="" placeholder="Search ads">
+             <button type="submit" class="btn btn-dark" name="btnSearch">Valid</button>
+          </form>
+    </div>
+      </div>
 
         <%
   for(var i=0; i<dataAd.length; i++) {
   %>
-  <a href="/cardAds?id=<%=dataAd[i]._id%>">
         <div class="row">
           <div class="offset-1 col-10">
             <div class="card text-center">
@@ -156,18 +175,19 @@
                 </div>
                 </div>
               </div>
+              <a href="/cardAds?id=<%=dataAd[i]._id%>">
               <div class="card-body">
                 <h5 class="card-title"><%=dataAd[i].title%></h5>
                 <p class="card-text"><%=dataAd[i].message%></p>
                 <a href="/postAds" class="btn btn-primary">Reserve</a>
               </div>
+              </a>
               <div class="card-footer text-muted">
                 2 days ago
               </div>
             </div>
           </div>
           </div>
-          </a>
          <%}%>
                   </div>
 
