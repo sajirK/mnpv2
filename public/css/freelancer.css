@@ -467,7 +467,7 @@ a.btn-dark:hover, .btn-dark:focus, .btn-dark:active {
 }
 
 #cardAdMarginTop {
-  margin-top: 60px;
+  margin-top: 100px;
 }
 
 #titleAd {
@@ -481,5 +481,22 @@ a.btn-dark:hover, .btn-dark:focus, .btn-dark:active {
 }
 
 #searchBar{
-  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
+.padding-left {
+  padding-left: 90px;
+}
+
+#postYourComment {
+  margin-top: 100px;
+}
+
+.margin-top {
+  margin-top: 40px;
+}
+
+.card, .comments {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

@@ -33,13 +33,22 @@ var AdSchema = mongoose.Schema({
 });
 var AdModel = mongoose.model('annonce', AdSchema);
 
+// ad comments
+var commentSchema = mongoose.Schema({
+  userId: String,
+  userName: String,
+  adId: String,
+  message: String
+});
+var commentModel = mongoose.model('comments', commentSchema);
+
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
 
   AdModel.find(function(error, dataAd){
   req.session.dataAd = dataAd;
-  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
+  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
 });
   })
 
@@ -130,10 +139,13 @@ router.get('/cardAds', function(req, res, next) {
   AdModel.find(
     {_id : req.query.id},
     function(err, oneAd){
-      console.log(oneAd);
-        res.render('Ads', {dataAd: oneAd[0]});
+      req.session.oneAd = oneAd[0];
+      commentModel.find(
+        {adId : req.session.oneAd._id},
+        function(err, comments){
+            res.render('Ads', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments});
+        })
     })
-
 });
 
 
@@ -191,8 +203,53 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.post('/search', function(req, res){
-console.log(req.session.dataAd);
-res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
+  var adSearch = [];
+  var search = req.body.search;
+      search = search.toUpperCase();
+     for (var i = 0; i < req.session.dataAd.length; i++) {
+      var title = JSON.stringify(req.session.dataAd[i].title)
+          title = title.toUpperCase();
+      var message = JSON.stringify(req.session.dataAd[i].message)
+          message = message.toUpperCase();
+      var crypto = JSON.stringify(req.session.dataAd[i].crypto)
+          crypto = crypto.toUpperCase();
+      var NbSeat = JSON.stringify(req.session.dataAd[i].NbSeat)
+      if (title.includes(search) ||
+       message.includes(search) ||
+       crypto.includes(search) ||
+       NbSeat.includes(search)) {
+        adSearch.push(req.session.dataAd[i]);
+      }
+      }
+      res.render('index', {dataAd: adSearch, IsLog: req.session.IsLog, user : req.session.user });
 });
+
+router.get('/adComment', function(req, res, next) {
+  res.render('comment', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user});
+});
+
+router.post('/postComment', function(req, res, next) {
+  console.log(req.session.user);
+  console.log(req.session.user._id);
+  var newComment = new commentModel({
+    userId: req.session.user._id,
+    userName: req.session.user.name,
+    adId: req.session.oneAd._id,
+    message: req.body.comment
+  });
+  newComment.save(
+    function(error, comments) {
+      commentModel.find(
+          {adId: req.session.oneAd._id},
+        function(err, comments) {
+          console.log(comments);
+          res.render('Ads', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user, comments});
+        }
+      )
+
+    });
+
+});
+
 
 module.exports = router;
