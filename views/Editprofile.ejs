@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>My profile</title>
+    <title>Edit profile</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -43,9 +43,11 @@
               <h1 id="head">MNPooL</h1>
             </div>
           <ul class="navbar-nav ml-auto">
+
             <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/">Logout</a>
             </li>
+
           </ul>
         </div>
       </div>
@@ -62,93 +64,75 @@
            <!-- left column -->
            <div class="col-md-3">
              <div class="text-center">
-           <form ref='uploadForm' id='uploadForm' action='/upload' method='post' encType="multipart/form-data">
-         <img src="/img/sajir.png" class="avatar img-circle" alt="avatar">
-         <h6>Upload a different photo...</h6>
-         <input type="file" class="form-control" name="avatar">
-           <input type='submit' value='Upload!' />
-    </form>
+            <form ref='uploadForm' id='uploadForm' action='/upload' method='post' encType="multipart/form-data">
+              <img src="./images/<%=idUser%>.png" class="avatar img-circle" alt="avatar">
+              <h6>Upload a different photo...</h6>
+              <input type="file" class="form-control" name="avatar">
+              <!-- <input type="hidden" name="info" value="iduser"> -->
+              <input type='submit' value='Upload!' />
+            </form>
   </div>
 </div>
-           <!-- <div class="col-md-3">
-             <div class="text-center">
-               <img src="/img/profile.png" class="avatar img-circle" alt="avatar">
-               <h6>Upload a different photo...</h6>
-
-               <input type="file" class="form-control">
-             </div>
-           </div> -->
-
            <!-- edit form column -->
            <div class="col-md-9 personal-info">
              <div class="alert alert-info alert-dismissable">
                <a class="panel-close close" data-dismiss="alert">×</a>
                <i class="fa fa-coffee"></i>
-               Wellcom back <strong> sajir</strong>,what you want to do today ?
+               Wellcom back <strong> <%=name%></strong>,what you want to do today ?
              </div>
              <h3>Personal info</h3>
+ <!-- ************* Form Edit Profile ********** -->
+             <form action="/SaveChange" method="post" class="form-horizontal" role="form">
+               <div class="form-group">
+                 <label class="col-lg-3 control-label">username:</label>
+                 <div class="col-lg-8">
+                   <input name="name" class="form-control" type="text" value= "<%=name%>">
+                 </div>
+               </div>
 
-             <form class="form-horizontal" role="form">
-               <div class="form-group">
-                 <label class="col-lg-3 control-label">First name:</label>
-                 <div class="col-lg-8">
-                   <input class="form-control" type="text" value="Jane">
-                 </div>
-               </div>
-               <div class="form-group">
-                 <label class="col-lg-3 control-label">Last name:</label>
-                 <div class="col-lg-8">
-                   <input class="form-control" type="text" value="Bishop">
-                 </div>
-               </div>
 
                <div class="form-group">
                  <label class="col-lg-3 control-label">Email:</label>
                  <div class="col-lg-8">
-                   <input class="form-control" type="text" value="janesemail@gmail.com">
+                   <input name="NewEmail" class="form-control" type="text" value="<%=email%>">
                  </div>
                </div>
-               <div class="form-group">
-                 <label class="col-lg-3 control-label">Time Zone:</label>
-                 <div class="col-lg-8">
-                   <div class="ui-select">
-                     <select id="user_time_zone" class="form-control">
-                       <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                       <option value="Alaska">(GMT-09:00) Alaska</option>
-                       <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                       <option value="Arizona">(GMT-07:00) Arizona</option>
-                       <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                       <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                       <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                       <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                     </select>
-                   </div>
-                 </div>
-               </div>
-               <div class="form-group">
-                 <label class="col-md-3 control-label">Username:</label>
-                 <div class="col-md-8">
-                   <input class="form-control" type="text" value="janeuser">
-                 </div>
-               </div>
+
                <div class="form-group">
                  <label class="col-md-3 control-label">Password:</label>
                  <div class="col-md-8">
-                   <input class="form-control" type="password" value="11111122333">
+                   <input name="password"class="form-control" type="password" value="<%=password%>">
                  </div>
                </div>
                <div class="form-group">
                  <label class="col-md-3 control-label">Confirm password:</label>
                  <div class="col-md-8">
-                   <input class="form-control" type="password" value="11111122333">
+                   <input name="password" class="form-control" type="password" value="<%=password%>">
+                 </div>
+               </div>
+
+               <div class="form-group">
+                 <label class="col-md-3 control-label">Your Job:</label>
+                 <div class="col-md-8">
+                  <textarea name="job" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="your job"></textarea>
                  </div>
                </div>
                <div class="form-group">
+                 <label class="col-md-3 control-label">Your Bio:</label>
+                 <div class="col-md-8">
+                  <textarea name="bio" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="your bio"></textarea>
+                 </div>
+               </div>
+
+
+
+
+               <div class="form-group">
                  <label class="col-md-3 control-label"></label>
                  <div class="col-md-8">
-                   <input type="button" class="btn btn-primary" value="Save Changes">
+                   <input type="submit" class="btn btn-primary" value="Save Changes">
                    <span></span>
-                   <input type="reset" class="btn btn-default" value="Cancel">
+                   <a class="btn btn-secondary" href="/profile">Cancel</a>
                  </div>
                </div>
              </form>

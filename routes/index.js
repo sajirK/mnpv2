@@ -29,7 +29,8 @@ var AdSchema = mongoose.Schema({
   crypto: String,
   title: String,
   NbSeat: Number,
-  message: String
+  message: String,
+  dateAnnonce: Date
 });
 var AdModel = mongoose.model('annonce', AdSchema);
 
@@ -51,9 +52,6 @@ router.get('/', function(req, res, next) {
   res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
 });
   })
-
-
-
 
 
 // GET Signup page
@@ -119,7 +117,8 @@ router.post('/ad', function(req, res, next) {
     crypto: req.body.crypto,
     title: req.body.title,
     NbSeat: req.body.NbSeat,
-    message: req.body.message
+    message: req.body.message,
+    dateAnnonce: new Date()
   });
   newAd.save(
     function(error, annonce) {
@@ -155,13 +154,13 @@ router.post('/login', function(req, res, next) {
   UserModel.find(
       { name: req.body.name, password: req.body.password} ,
       function (err, users) {
+        console.log(users);
         if(users.length > 0) {
           req.session.user = users[0];
           req.session.IsLog = true;
           AdModel.find(
                // {user_id: req.session.user._id},
                function (error,annonce) {
-                 console.log(annonce);
                  console.log(req.session.IsLog);
                  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, annonce, user : req.session.user });
                }
@@ -181,26 +180,67 @@ router.get('/logout', function(req, res, next) {
   res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
 })
 
- // Get Edit My Profile page
- router.get('/profile', function(req, res, next) {
-   res.render('profile');
- })
- // file upload
+
+ // ********file upload************
  router.post('/upload', function(req, res) {
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
-     }
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  }
   let avatar = req.files.avatar;
 
+  console.log(req.session.user._id);
+  let idUser =req.session.user._id;
+
   // Use the mv() method to place the file somewhere on your server
-  avatar.mv('./img', function(err) {
+  avatar.mv('./public/images/' + idUser + '.png', function(err) {
+  // avatar.mv('./public/images/avatar.png', function(err) {
     if (err) {
+      console.log(idUser);
       return res.status(500).send(err);
-         }
-    res.render('profile',{IsLog: req.session.IsLog, avatar:req.files.avatar});
+    }
+
+  res.render('myprofile',{idUser: req.session.user._id ,name: req.session.user.name, IsLog: req.session.IsLog, avatar:req.files.avatar});
   });
 });
+    // ******* Get My Profile page ******
+  router.get('/profile', function(req, res, next) {
+  res.render('myprofile',{idUser: req.session.user._id, name: req.session.user.name});
+})
+
+
+    // *********** Get Edit My Profile page **********
+
+router.get('/Editprofile', function(req, res, next) {
+  res.render('Editprofile',{idUser: req.session.user._id,name: req.session.user.name,password: req.session.user.password,email: req.session.user.email});
+});
+     // ********* Save Profile Changes **********
+
+
+     router.post('/SaveChange', function(req, res, next) {
+       UserModel.update({idUser: req.session.user._id}, req.body, function(err, user){
+        if(!user){
+            req.flash('error', 'No account found');
+            return res.render('index');
+        }
+        var emailEdit = req.body.email;
+        var nameEdit = req.body.name;
+        var jobEdit = req.body.job;
+        var bioEdit = req.body.bio;
+        if(emailEdit.lenght <= 0 || usernameEdit.lenght <= 0 || first_nameEdit.job <= 0 || last_nameEdit.bio <= 0){
+            req.flash('error', 'One or more fields are empty');
+            res.render('Editprofile',{idUser: req.session.user._id,user : req.session.user ,bio: req.session.user.bio,job: req.session.user.job,name: req.session.user.name,password: req.session.user.password,email: req.session.user.email});
+        }
+        else{
+            user.email = emailEdit;
+            user.local.email = emailEdit;
+            user.job = jobEdit;
+            user.bio = bioEdit;
+            user.username = usernameEdit;
+
+            res.render('myprofile', {idUser: req.session.user._id,user : req.session.user ,bio: req.session.user.bio,job: req.session.user.job,name: req.session.user.name,password: req.session.user.password,email: req.session.user.email});
+        }
+    });
+    });
 
 router.post('/search', function(req, res){
   var adSearch = [];
@@ -250,6 +290,7 @@ router.post('/postComment', function(req, res, next) {
     });
 
 });
+
 
 
 module.exports = router;
