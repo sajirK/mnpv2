@@ -179,7 +179,11 @@
               <div class="card-body">
                 <h5 class="card-title"><%=dataAd[i].title%></h5>
                 <p class="card-text"><%=dataAd[i].message%></p>
-                <a href="/postAds" class="btn btn-primary">Reserve</a>
+                <%
+                if (IsLog == true) {
+                  %>
+                <a href="/sendReq?id=<%=dataAd[i]._id%>" class="btn btn-primary">Reserve</a>
+                <%}%>
               </div>
               </a>
               <div class="card-footer text-muted">
