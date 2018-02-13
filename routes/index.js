@@ -28,6 +28,8 @@ var UserModel = mongoose.model('users', userSchema);
 
 // ad formulaire
 var AdSchema = mongoose.Schema({
+  posterName: String,
+  posterId: String,
   crypto: String,
   cryptoP:String,
   title: String,
@@ -46,6 +48,17 @@ var commentSchema = mongoose.Schema({
   dateComment: Date
 });
 var commentModel = mongoose.model('comments', commentSchema);
+
+// Request
+var reqSchema = mongoose.Schema({
+  adId: String,
+  posterName: String,
+  posterId: String,
+  userReqName: String,
+  userReqId: String,
+  dateAnnonce: Date
+});
+var reqModel = mongoose.model('request', reqSchema);
 
 /* GET home page. */
 
@@ -83,7 +96,9 @@ if (req.body.password == req.body.confirm) {
             req.session.user = user;
 
             req.session.IsLog = true;
-                res.render('index', {user : req.session.user,dataAd: req.session.dataAd, IsLog: req.session.IsLog});
+
+                res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
+
                         }
                       )
                         }else {
@@ -117,6 +132,8 @@ router.post('/ad', function(req, res, next) {
 
   // body = JSON.parse(body);
   var newAd = new AdModel({
+    posterName: req.session.user.name,
+    posterId: req.session.user._id,
     crypto: req.body.crypto,
     cryptoP: body.USD,
     title: req.body.title,
@@ -128,7 +145,10 @@ router.post('/ad', function(req, res, next) {
     function(error, annonce) {
       AdModel.find(
         function(err, annonce) {
-                res.render('index',{dataAd: annonce, IsLog: req.session.IsLog, user : req.session.user});
+
+          req.session.dataAd = annonce;
+          res.render('index',{dataAd: req.session.dataAd, IsLog: req.session.IsLog, user: req.session.user});
+
         }
       )
   });
@@ -175,6 +195,7 @@ router.post('/login', function(req, res, next) {
 // Logout
 router.get('/logout', function(req, res, next) {
   req.session.IsLog = false;
+  console.log(req.session.dataAd);
 
   res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
 })
@@ -203,7 +224,13 @@ router.get('/logout', function(req, res, next) {
 });
     // ******* Get My Profile page ******
   router.get('/profile', function(req, res, next) {
-  res.render('myprofile',{user: req.session.user, idUser: req.session.user._id});
+    AdModel.find(
+      {posterId: req.session.user._id},
+      function(err, myAds){
+        req.session.myAds = myAds
+      res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, dataAd: myAds});
+      }
+    )
 });
 
 
@@ -230,7 +257,7 @@ router.get('/Editprofile', function(req, res, next) {
              var userIdTmp = req.session.user._id;
              req.session.user = req.body;
               req.session.user._id = userIdTmp;
-                res.render('myprofile', {user: req.body, idUser: req.session.user._id});
+                res.render('myprofile', {user: req.body, idUser: req.session.user._id, dataAd: req.session.myAds});
        }
        );
       } else{
@@ -287,6 +314,29 @@ router.post('/postComment', function(req, res, next) {
     });
 
 });
+
+router.get('/sendReq', function(req, res, next) {
+    console.log(req.query.id);
+AdModel.find(
+  {_id: req.query.id},
+  function(err, ad) {
+    console.log(ad);
+    var newRequest = new reqModel({
+       adId: req.query.id,
+       posterName: ad[0].posterName,
+       posterId: ad[0].posterId,
+       userReqName: req.session.user.name,
+       userReqId: req.session.user._id,
+    });
+    newRequest.save(
+      function(error, request) {
+res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
+      });
+  });
+  }
+)
+
+
 
 
 module.exports = router;

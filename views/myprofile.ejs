@@ -113,7 +113,89 @@
 
     </aside>
 
-
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <h2 class="text-center text-uppercase text-secondary mb-0">My Ads:</h2>
+        <hr class="star-dark mb-5">
+          <%
+    for(var i=0; i<dataAd.length; i++) {
+    %>
+          <div class="row">
+            <div class="offset-1 col-10">
+              <div class="card text-center">
+                <div class="card-header">
+                  <div class="row">
+                  <div class="col-3">
+                    Crypto
+                  </div>
+                  <div class="col-3">
+                    Seat
+                  </div>
+                  <div class="col-3">
+                    ROI
+                  </div>
+                  <div class="col-3">
+                    Price
+                  </div>
+                  </div>
+                </div>
+                <div class="card-header">
+                  <div class="row">
+                  <div class="col-3">
+                    <%=dataAd[i].crypto%>
+                  </div>
+                  <div class="col-3">
+                    <%=dataAd[i].NbSeat%>
+                  </div>
+                  <div class="col-3">
+                    248%
+                  </div>
+                  <div class="col-3">
+                    336$
+                  </div>
+                  </div>
+                </div>
+                <a href="/cardAds?id=<%=dataAd[i]._id%>">
+                <div class="card-body">
+                  <h5 class="card-title"><%=dataAd[i].title%></h5>
+                  <p class="card-text"><%=dataAd[i].message%></p>
+                  <a href="/sendReq?id=<%=dataAd[i]._id%>" class="btn btn-primary">Reserve</a>
+                </div>
+                </a>
+                <div class="card-footer text-muted">
+                  2 days ago
+                </div>
+              </div>
+            </div>
+            </div>
+           <%}%>
+      </div>
+      <div class="col-6">
+        <h2 class="text-center text-uppercase text-secondary mb-0">My request receive:</h2>
+        <hr class="star-dark mb-5">
+        <%
+  for(var i=0; i<dataAd.length; i++) {
+  %>
+        <div class="row">
+          <div class="offset-1 col-10">
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title"><%=dataAd[i].title%></h5>
+                <p class="card-text"><%=dataAd[i].message%></p>
+                
+                <a href="/sendReq?id=<%=dataAd[i]._id%>" class="btn btn-primary">Reserve</a>
+              </div>
+              <div class="card-footer text-muted">
+                2 days ago
+              </div>
+            </div>
+          </div>
+          </div>
+         <%}%>
+      </div>
+    </div>
+  </div>
 
     <!-- Footer -->
     <footer class="footer text-center">
