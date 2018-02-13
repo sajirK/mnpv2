@@ -29,6 +29,7 @@ var UserModel = mongoose.model('users', userSchema);
 // ad formulaire
 var AdSchema = mongoose.Schema({
   crypto: String,
+  cryptoP:String,
   title: String,
   NbSeat: Number,
   message: String,
@@ -41,7 +42,8 @@ var commentSchema = mongoose.Schema({
   userId: String,
   userName: String,
   adId: String,
-  message: String
+  message: String,
+  dateComment: Date
 });
 var commentModel = mongoose.model('comments', commentSchema);
 
@@ -55,7 +57,6 @@ router.get('/', function(req, res, next) {
 });
 
   })
-
 
 // GET Signup page
 router.get('/signUp', function(req, res, next) {
@@ -82,7 +83,7 @@ if (req.body.password == req.body.confirm) {
             req.session.user = user;
 
             req.session.IsLog = true;
-                res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
+                res.render('index', {user : req.session.user,dataAd: req.session.dataAd, IsLog: req.session.IsLog});
                         }
                       )
                         }else {
@@ -105,15 +106,19 @@ router.get('/postAds', function(req, res, next) {
   res.render('postAds');
 });
 
-
-
-
 // add new ad
 
 router.post('/ad', function(req, res, next) {
+  request("https://min-api.cryptocompare.com/data/price?fsym="+req.body.crypto+"&tsyms=USD", function(error, response, body) {
+
+   body = JSON.parse(body);
+   console.log(body.usd);
+ var price = body.USD;
+
   // body = JSON.parse(body);
   var newAd = new AdModel({
     crypto: req.body.crypto,
+    cryptoP: body.USD,
     title: req.body.title,
     NbSeat: req.body.NbSeat,
     message: req.body.message,
@@ -123,12 +128,12 @@ router.post('/ad', function(req, res, next) {
     function(error, annonce) {
       AdModel.find(
         function(err, annonce) {
-          res.render('index',{dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
+                res.render('index',{dataAd: annonce, IsLog: req.session.IsLog, user : req.session.user});
         }
       )
-
+  });
     });
-});
+      });
 
 
 router.get('/cardAds', function(req, res, next) {
@@ -253,7 +258,7 @@ router.post('/search', function(req, res){
         adSearch.push(req.session.dataAd[i]);
       }
       }
-      res.render('index', {dataAd: adSearch, IsLog: req.session.IsLog, user : req.session.user });
+      res.render('index', {search,dataAd: adSearch, IsLog: req.session.IsLog, user : req.session.user });
 });
 
 router.get('/adComment', function(req, res, next) {
@@ -261,20 +266,20 @@ router.get('/adComment', function(req, res, next) {
 });
 
 router.post('/postComment', function(req, res, next) {
-  console.log(req.session.user);
-  console.log(req.session.user._id);
+
   var newComment = new commentModel({
     userId: req.session.user._id,
     userName: req.session.user.name,
     adId: req.session.oneAd._id,
-    message: req.body.comment
+    message: req.body.comment,
+    dateComment: new Date()
   });
   newComment.save(
     function(error, comments) {
       commentModel.find(
           {adId: req.session.oneAd._id},
         function(err, comments) {
-          console.log(comments);
+
           res.render('Ads', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user, comments});
         }
       )
@@ -282,7 +287,6 @@ router.post('/postComment', function(req, res, next) {
     });
 
 });
-
 
 
 module.exports = router;
