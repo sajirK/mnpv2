@@ -47,7 +47,7 @@
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Editprofile">Edit</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/">Logout</a>
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/logout">Logout</a>
             </li>
           </ul>
         </div>
@@ -64,25 +64,22 @@
 
         <!-- here’s the avatar -->
 
-          <!-- <img src="images/ <%=idUser%> .png"> -->
-          <img src="./images/<%=idUser%>.png">
+          <img id="profilImg" src="./images/<%=idUser%>.png">
 
 
         <!-- the username -->
-        <h1><%=name%></h1>
+        <h1><%=user.name%></h1>
 
         <!-- and role or location -->
-        <h2>- Full Stack Web Developer -</h2>
+
+       <h2><%=user.job%></h2>
 
       </header>
 
       <!-- bit of a bio; who are you? -->
       <div class="profile-bio">
 
-        <p>Hello there!</p>
-
-        <p>I am a full stack web developer. I mainly work with HTML, CSS, JS and MongoDB.
-          <br />I also play well with Photoshop, Corel Draw, After Effects and other cool stuff.</p>
+        <p><%=user.bio%></p>
 
       </div>
 

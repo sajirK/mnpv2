@@ -65,7 +65,7 @@
            <div class="col-md-3">
              <div class="text-center">
             <form ref='uploadForm' id='uploadForm' action='/upload' method='post' encType="multipart/form-data">
-              <img src="./images/<%=idUser%>.png" class="avatar img-circle" alt="avatar">
+              <img src="./images/<%=user._id%>.png" class="avatar img-circle" alt="avatar">
               <h6>Upload a different photo...</h6>
               <input type="file" class="form-control" name="avatar">
               <!-- <input type="hidden" name="info" value="iduser"> -->
@@ -78,15 +78,15 @@
              <div class="alert alert-info alert-dismissable">
                <a class="panel-close close" data-dismiss="alert">×</a>
                <i class="fa fa-coffee"></i>
-               Wellcom back <strong> <%=name%></strong>,what you want to do today ?
+               Welcome back <strong> <%=user.name%></strong>, what do you want to change?
              </div>
              <h3>Personal info</h3>
  <!-- ************* Form Edit Profile ********** -->
              <form action="/SaveChange" method="post" class="form-horizontal" role="form">
                <div class="form-group">
-                 <label class="col-lg-3 control-label">username:</label>
+                 <label class="col-lg-3 control-label">Username:</label>
                  <div class="col-lg-8">
-                   <input name="name" class="form-control" type="text" value= "<%=name%>">
+                   <input name="name" class="form-control" type="text" value= "<%=user.name%>">
                  </div>
                </div>
 
@@ -94,33 +94,33 @@
                <div class="form-group">
                  <label class="col-lg-3 control-label">Email:</label>
                  <div class="col-lg-8">
-                   <input name="NewEmail" class="form-control" type="text" value="<%=email%>">
+                   <input name="email" class="form-control" type="text" value="<%=user.email%>">
                  </div>
                </div>
 
                <div class="form-group">
                  <label class="col-md-3 control-label">Password:</label>
                  <div class="col-md-8">
-                   <input name="password"class="form-control" type="password" value="<%=password%>">
+                   <input name="password"class="form-control" type="password" value="<%=user.password%>">
                  </div>
                </div>
                <div class="form-group">
                  <label class="col-md-3 control-label">Confirm password:</label>
                  <div class="col-md-8">
-                   <input name="password" class="form-control" type="password" value="<%=password%>">
+                   <input name="confirm" class="form-control" type="password" value="<%=user.password%>">
                  </div>
                </div>
 
                <div class="form-group">
                  <label class="col-md-3 control-label">Your Job:</label>
                  <div class="col-md-8">
-                  <textarea name="job" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="your job"></textarea>
+                  <textarea name="job" class="form-control" rows="3" placeholder="your job"><%=user.job%></textarea>
                  </div>
                </div>
                <div class="form-group">
                  <label class="col-md-3 control-label">Your Bio:</label>
                  <div class="col-md-8">
-                  <textarea name="bio" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="your bio"></textarea>
+                  <textarea name="bio" maxlength="250" class="form-control" rows="3" placeholder="your bio"><%=user.bio%></textarea>
                  </div>
                </div>
 
