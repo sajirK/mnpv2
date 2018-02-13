@@ -63,32 +63,38 @@
                               <form action="/ad" method="post">
                                 <div class="form-group">
                                   <div class="form-row">
-                                    <div class="col-md-6">
-                                      <button type="button" class="btn btn-default">choose your Crypto</button>
-                                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">     <span class="caret"></span>
-                                          <span class="sr-only">choose your Crypto</span>
-                                          </button>
-                                          <ul class="dropdown-menu">
-                                          <li><a title="Lien 1">LUX</a></li>
-                                          <i><a title="Lien 2">DASH</a></li>
-                                          </ul>
-                                    </div>
-                                    <div class="col-md-6">
-                                      <label for="exampleInputLastName">Number of seat</label>
-                                      <input name="NbSeat"class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="10/10">
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <div class="form-row">
-                                    <!-- <div class="col-md-6">
-                                      <label for="exampleInputPassword1">ROI</label>
-                                      <input name="ROI" class="form-control" id="exampleInputPassword1" type="hidden" placeholder="">
-                                    </div> -->
-                                    <!-- <div class="col-md-6">
-                                      <label for="exampleConfirmPassword">Price</label>
-                                      <input name="Price" class="form-control" id="exampleConfirmPassword" type="hidden" placeholder="">
-                                    </div> -->
+
+
+
+                                      <div class="btn-group">
+                                        <label>Choose a Crypto from this list:
+                                      <input  list="Crypto" name="crypto" /></label>
+                                      <datalist id="Crypto">
+                                        <option value="LUX">
+                                        <option value="DASH">
+                                        <option value=" WTC">
+                                        <option value="MUE">
+                                        <option value="XLR">
+                                        <option value="SUB">
+                                      </datalist>
+
+                                            </div>
+                                          <div class="col-md-6">
+                                            <select name="NbSeat">
+                                              <option value="1">1</option>
+                                              <option value="2">2</option>
+                                              <option value="3">3</option>
+                                              <option value="4">4</option>
+                                              <option value="5">5</option>
+                                              <option value="6">6</option>
+                                              <option value="7">7</option>
+                                              <option value="8">!</option>
+                                              <option value="9">9</option>
+                                              <option value="10">10</option>
+                                              </select>
+                                              </div>
+
+
                                   </div>
                                 </div>
                                 <div class="form-group">
