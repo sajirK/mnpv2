@@ -20,7 +20,9 @@ mongoose.connect('mongodb://mnp:azerty22@ds225308.mlab.com:25308/masternodepoold
 var userSchema = mongoose.Schema({
   name: String,
   email: String,
-  password: String
+  password: String,
+  job: String,
+  bio: String
 });
 var UserModel = mongoose.model('users', userSchema);
 
@@ -29,9 +31,19 @@ var AdSchema = mongoose.Schema({
   crypto: String,
   title: String,
   NbSeat: Number,
-  message: String
+  message: String,
+  dateAnnonce: Date
 });
 var AdModel = mongoose.model('annonce', AdSchema);
+
+// ad comments
+var commentSchema = mongoose.Schema({
+  userId: String,
+  userName: String,
+  adId: String,
+  message: String
+});
+var commentModel = mongoose.model('comments', commentSchema);
 
 /* GET home page. */
 
@@ -39,17 +51,15 @@ router.get('/', function(req, res, next) {
 
   AdModel.find(function(error, dataAd){
   req.session.dataAd = dataAd;
-  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
+  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
 });
+
   })
-
-
-
 
 
 // GET Signup page
 router.get('/signUp', function(req, res, next) {
-  res.render('signUp', {title: 'Express'});
+  res.render('signUp');
 });
 
    // user form database
@@ -67,27 +77,23 @@ if (req.body.password == req.body.confirm) {
           email: req.body.email,
           password: req.body.password
         });
-        console.log(newUser);
         newUser.save(
           function(error, user) {
             req.session.user = user;
 
             req.session.IsLog = true;
-            console.log(req.session.IsLog);
-                res.render('index', {});
+                res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
                         }
                       )
                         }else {
                       req.session.IsLog = false;
-                      console.log(req.session.IsLog);
                       res.render('signUp',{});
                     }
                   }
                 )
               }else {
                 req.session.IsLog = false;
-                console.log(req.session.IsLog);
-                res.render('signUp',{});
+                res.render('signUp');
 
               }
               }
@@ -110,15 +116,14 @@ router.post('/ad', function(req, res, next) {
     crypto: req.body.crypto,
     title: req.body.title,
     NbSeat: req.body.NbSeat,
-    message: req.body.message
+    message: req.body.message,
+    dateAnnonce: new Date()
   });
   newAd.save(
     function(error, annonce) {
-      console.log(annonce);
-      // res.render('index');
       AdModel.find(
         function(err, annonce) {
-          res.render('index',{IsLog: req.session.IsLog});
+          res.render('index',{dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
         }
       )
 
@@ -130,10 +135,13 @@ router.get('/cardAds', function(req, res, next) {
   AdModel.find(
     {_id : req.query.id},
     function(err, oneAd){
-      console.log(oneAd);
-        res.render('Ads', {dataAd: oneAd[0]});
+      req.session.oneAd = oneAd[0];
+      commentModel.find(
+        {adId : req.session.oneAd._id},
+        function(err, comments){
+            res.render('Ads', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments});
+        })
     })
-
 });
 
 
@@ -141,7 +149,7 @@ router.get('/cardAds', function(req, res, next) {
 // login
 router.post('/login', function(req, res, next) {
   UserModel.find(
-      { name: req.body.name, password: req.body.password} ,
+      {name: req.body.name, password: req.body.password} ,
       function (err, users) {
         if(users.length > 0) {
           req.session.user = users[0];
@@ -149,15 +157,12 @@ router.post('/login', function(req, res, next) {
           AdModel.find(
                // {user_id: req.session.user._id},
                function (error,annonce) {
-                 console.log(annonce);
-                 console.log(req.session.IsLog);
-                 res.render('index', {IsLog:req.session.IsLog, annonce, user : req.session.user });
+                 res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, annonce, user : req.session.user });
                }
            )
         } else {
           req.session.IsLog = false;
-          console.log(req.session.IsLog);
-          res.render('index', {IsLog: req.session.IsLog});
+          res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
         }
   });
 });
@@ -166,28 +171,118 @@ router.post('/login', function(req, res, next) {
 router.get('/logout', function(req, res, next) {
   req.session.IsLog = false;
 
-  res.render('index', {IsLog: req.session.IsLog});
+  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
 })
 
- // Get Edit My Profile page
- router.get('/profile', function(req, res, next) {
-   res.render('profile');
- })
- // file upload
+
+ // ********file upload************
  router.post('/upload', function(req, res) {
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
-     }
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  }
   let avatar = req.files.avatar;
 
+  console.log(req.session.user._id);
+  let idUser =req.session.user._id;
+
   // Use the mv() method to place the file somewhere on your server
-  avatar.mv('./img', function(err) {
+  avatar.mv('./public/images/' + idUser + '.png', function(err) {
+  // avatar.mv('./public/images/avatar.png', function(err) {
     if (err) {
+      console.log(idUser);
       return res.status(500).send(err);
-         }
-    res.render('profile',{IsLog: req.session.IsLog, avatar:req.files.avatar});
+    }
+
+  res.render('myprofile',{user: req.session.user, idUser: req.session.user._id});
   });
 });
+    // ******* Get My Profile page ******
+  router.get('/profile', function(req, res, next) {
+  res.render('myprofile',{user: req.session.user, idUser: req.session.user._id});
+});
+
+
+    // *********** Get Edit My Profile page **********
+
+router.get('/Editprofile', function(req, res, next) {
+  res.render('Editprofile',{user: req.session.user});
+});
+     // ********* Save Profile Changes **********
+
+
+     router.post('/SaveChange', function(req, res, next) {
+       if(req.body.email.length > 0 &&
+          req.body.name.length > 0 &&
+           req.body.password.length > 0 &&
+            req.body.password == req.body.confirm){
+       UserModel.update({_id: req.session.user._id},
+         {email: req.body.email,
+         name: req.body.name,
+         password: req.body.password,
+         job: req.body.job,
+         bio: req.body.bio},
+           function(err, user){
+             var userIdTmp = req.session.user._id;
+             req.session.user = req.body;
+              req.session.user._id = userIdTmp;
+                res.render('myprofile', {user: req.body, idUser: req.session.user._id});
+       }
+       );
+      } else{
+        res.render('Editprofile', {user: req.session.user});
+      }
+  });
+
+
+router.post('/search', function(req, res){
+  var adSearch = [];
+  var search = req.body.search;
+      search = search.toUpperCase();
+     for (var i = 0; i < req.session.dataAd.length; i++) {
+      var title = JSON.stringify(req.session.dataAd[i].title)
+          title = title.toUpperCase();
+      var message = JSON.stringify(req.session.dataAd[i].message)
+          message = message.toUpperCase();
+      var crypto = JSON.stringify(req.session.dataAd[i].crypto)
+          crypto = crypto.toUpperCase();
+      var NbSeat = JSON.stringify(req.session.dataAd[i].NbSeat)
+      if (title.includes(search) ||
+       message.includes(search) ||
+       crypto.includes(search) ||
+       NbSeat.includes(search)) {
+        adSearch.push(req.session.dataAd[i]);
+      }
+      }
+      res.render('index', {dataAd: adSearch, IsLog: req.session.IsLog, user : req.session.user });
+});
+
+router.get('/adComment', function(req, res, next) {
+  res.render('comment', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user});
+});
+
+router.post('/postComment', function(req, res, next) {
+  console.log(req.session.user);
+  console.log(req.session.user._id);
+  var newComment = new commentModel({
+    userId: req.session.user._id,
+    userName: req.session.user.name,
+    adId: req.session.oneAd._id,
+    message: req.body.comment
+  });
+  newComment.save(
+    function(error, comments) {
+      commentModel.find(
+          {adId: req.session.oneAd._id},
+        function(err, comments) {
+          console.log(comments);
+          res.render('Ads', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user, comments});
+        }
+      )
+
+    });
+
+});
+
+
 
 module.exports = router;

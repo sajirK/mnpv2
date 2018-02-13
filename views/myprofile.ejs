@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>My profile</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="bootstrap.css">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="css/freelancer.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-topP">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="/"><img src="/img/logo_mnp/MNP-01v2.png" id="logo"></a>
+        <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <div class="offset-3 col-8">
+              <h1 id="head">MNPooL</h1>
+            </div>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Editprofile">Edit</a>
+            </li>
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+
+    <!-- this is the markup. you can change the details (your own name, your own avatar etc.) but don’t change the basic structure! -->
+
+    <aside class="profile-card">
+
+      <header>
+
+        <!-- here’s the avatar -->
+
+          <img id="profilImg" src="./images/<%=idUser%>.png">
+
+
+        <!-- the username -->
+        <h1><%=user.name%></h1>
+
+        <!-- and role or location -->
+
+       <h2><%=user.job%></h2>
+
+      </header>
+
+      <!-- bit of a bio; who are you? -->
+      <div class="profile-bio">
+
+        <p><%=user.bio%></p>
+
+      </div>
+
+      <!-- some social links to show off -->
+      <ul class="profile-social-links">
+
+        <!-- twitter - el clásico  -->
+        <li>
+          <a href="https://twitter.com/Hsksajir">
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/social-twitter.svg">
+          </a>
+        </li>
+
+        <!-- envato – use this one to link to your marketplace profile -->
+        <li>
+          <a href="https://www.linkedin.com/in/sajir-khenissi-776434156/">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiy3ER-fmqO-h2EM3ohsG-yy9rBhZbJG3Ox3vIi0uy6kCU2CJZ">
+          </a>
+        </li>
+
+        <!-- codepen - your codepen profile-->
+        <li>
+          <a href="https://discordapp.com/channels/@me">
+            <img src="https://vignette.wikia.nocookie.net/theamazingworldofgumball/images/a/af/Discord_Logo.png/revision/latest?cb=20170105233205">
+          </a>
+        </li>
+
+        <!-- add or remove social profiles as you see fit -->
+
+      </ul>
+
+    </aside>
+
+
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-5 mb-lg-0">
+            <h4 class="text-uppercase mb-4">Location</h4>
+            <p class="lead mb-0">Paris, France.
+
+          </div>
+          <div class="col-md-4 mb-5 mb-lg-0">
+            <h4 class="text-uppercase mb-4">More About Us</h4>
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-google-plus"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-linkedin"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                  <i class="fa fa-fw fa-dribbble"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h4 class="text-uppercase mb-4">About US</h4>
+            <p class="lead mb-0">MNPooL is a free use platform to share Masternodes
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div class="copyright py-4 text-center text-white">
+      <div class="container">
+        <small>Copyright &copy; MNPooL 2018</small>
+      </div>
+    </div>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-to-top d-lg-none position-fixed ">
+      <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+        <i class="fa fa-chevron-up"></i>
+      </a>
+    </div>
+
+            <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+            <div class="scroll-to-top d-lg-none position-fixed ">
+              <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+                <i class="fa fa-chevron-up"></i>
+              </a>
+            </div>
+
+            <!-- Bootstrap core JavaScript -->
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+            <!-- Plugin JavaScript -->
+            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+            <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+            <!-- Contact Form JavaScript -->
+            <script src="js/jqBootstrapValidation.js"></script>
+            <script src="js/contact_me.js"></script>
+
+            <!-- Custom scripts for this template -->
+            <script src="js/freelancer.min.js"></script>
+
+          </body>
+
+        </html>

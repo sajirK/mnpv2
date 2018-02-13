@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>AdCard</title>
+  <title>New Ad</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -36,78 +36,51 @@
           Menu
           <i class="fa fa-bars"></i>
         </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <div class="offset-3 col-8">
-          <h1 id="head">MNPooL</h1>
+
+
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <div class="offset-3 col-6">
+              <h1 id="head">MNPooL</h1>
+            </div>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/logout">Logout</a>
+            </li>
+
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/profile">portfolio</a>
+            </li>
+          </ul>
+
         </div>
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/">Logout</a>
-          </li>
-        </ul>
       </div>
-    </div>
   </nav>
   <!-- Header Formulaire -->
   <section class="portfolio" id="portfolio">
-    <div class="container" id="cardAdMarginTop">
-      <h4 class="text-center text-uppercase text-secondary mb-0">Ad informations</h4>
+    <div class="container">
+      <h4 class="text-center text-uppercase text-secondary mb-0" id="postYourComment">Post your comments</h4>
       <hr class="star-dark mb-5">
       <div class="row">
-          <div class="offset-2 col-8">
-            <h5>Poster : </h5>
-          </div>
-        <div class="offset-2 col-8">
-          <h5>Crypto : <%=dataAd.crypto%></h5>
-        </div>
-        <div class="offset-2 col-8">
-          <h5>Free Seat : <%=dataAd.NbSeat%></h5>
-        </div>
-        <div class="offset-2 col-8">
-          <h5>Reserved :</h5>
-          <div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: <%= 100-dataAd.NbSeat*10 %>%" aria-valuenow= "<%=100-dataAd.NbSeat*10%>" aria-valuemin="0" aria-valuemax="100"><%= 100-dataAd.NbSeat*10 %>%</div></div>
-        </div>
-        <div class="offset-2 col-8">
-          <h5>ROI : </h5>
-        </div>
-        <div class="offset-2 col-8">
-          <h5>Price : </h5>
-        </div>
-        </div>
-        <h4 class="text-center text-uppercase text-secondary mb-0 margin-top">Poster message</h4>
-        <hr class="star-dark mb-5">
-        <div class="row">
-          <div class="offset-2 col-8" id="titleAd">
-            <h4><%=dataAd.title%></h4>
-          </div>
-          <div class="offset-2 col-8" id="messageAd">
-            <h5><%=dataAd.message%></h5>
-          </div>
-        </div>
-        <h4 class="text-center text-uppercase text-secondary mb-0 margin-top">Comments</h4>
-        <hr class="star-dark mb-5">
-        <%
-        if(IsLog == true) {
-          %>
-          <div class="row">
-        <div class="offset-9 col-3">
-          <a class="btn btn-dark" href="/adComment">Comment</a>
-          </div>
-          </div>
-          <%}%>
-          <%
-          for (var i=0; i<comments.length; i++) {
-            %>
-        <div class="row">
-          <div class="card comments" >
-          <div class="offset-1 col-10 text-center">
-            <h4><%=comments[i].userName%></h4>
-            <h5><%=comments[i].message%></h5>
-            </div>
-          </div>
-        </div>
-        <%}%>
-        </div>
+        <div class="card card-register mx-auto mt-5">
+          <div class="card-body">
+            <!-- formulair -->
+            <form action="/postComment" method="post">
+              <div class="form-group">
+                <!-- <input type="hidden" name="userId" value="<%=user._id%>">
+                <input type="hidden" name="userName" value="<%=user.name%>">
+                <input type="hidden" name="adId" value="<%=dataAd._id%>"> -->
+                <label for="exampleInputEmail1">Comment</label>
+                <textarea name="comment" class="form-control" rows="5" placeholder="Your message"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block" >Post</button>
+                              </form>
+                            </div>
+                          </div>
+
+
+      </div>
+    </div>
   </section>
 
   <!-- Footer -->
@@ -171,10 +144,10 @@
       </a>
   </div>
 
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Plugin JavaScript -->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
