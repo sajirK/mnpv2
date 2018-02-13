@@ -59,7 +59,7 @@ router.get('/', function(req, res, next) {
 
 // GET Signup page
 router.get('/signUp', function(req, res, next) {
-  res.render('signUp', {title: 'Express'});
+  res.render('signUp');
 });
 
    // user form database
@@ -77,27 +77,23 @@ if (req.body.password == req.body.confirm) {
           email: req.body.email,
           password: req.body.password
         });
-        console.log(newUser);
         newUser.save(
           function(error, user) {
             req.session.user = user;
 
             req.session.IsLog = true;
-            console.log(req.session.IsLog);
                 res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
                         }
                       )
                         }else {
                       req.session.IsLog = false;
-                      console.log(req.session.IsLog);
                       res.render('signUp',{});
                     }
                   }
                 )
               }else {
                 req.session.IsLog = false;
-                console.log(req.session.IsLog);
-                res.render('signUp',{});
+                res.render('signUp');
 
               }
               }
@@ -125,8 +121,6 @@ router.post('/ad', function(req, res, next) {
   });
   newAd.save(
     function(error, annonce) {
-      console.log(annonce);
-      // res.render('index');
       AdModel.find(
         function(err, annonce) {
           res.render('index',{dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
@@ -155,22 +149,19 @@ router.get('/cardAds', function(req, res, next) {
 // login
 router.post('/login', function(req, res, next) {
   UserModel.find(
-      { name: req.body.name, password: req.body.password} ,
+      {name: req.body.name, password: req.body.password} ,
       function (err, users) {
-        console.log(users);
         if(users.length > 0) {
           req.session.user = users[0];
           req.session.IsLog = true;
           AdModel.find(
                // {user_id: req.session.user._id},
                function (error,annonce) {
-                 console.log(req.session.IsLog);
                  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, annonce, user : req.session.user });
                }
            )
         } else {
           req.session.IsLog = false;
-          console.log(req.session.IsLog);
           res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
         }
   });
@@ -231,12 +222,10 @@ router.get('/Editprofile', function(req, res, next) {
          job: req.body.job,
          bio: req.body.bio},
            function(err, user){
-             console.log(req.body);
              var userIdTmp = req.session.user._id;
              req.session.user = req.body;
-             console.log(req.session.user);
               req.session.user._id = userIdTmp;
-         res.render('myprofile', {user: req.body, idUser: req.session.user._id});
+                res.render('myprofile', {user: req.body, idUser: req.session.user._id});
        }
        );
       } else{
