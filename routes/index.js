@@ -26,6 +26,7 @@ var UserModel = mongoose.model('users', userSchema);
 
 // ad formulaire
 var AdSchema = mongoose.Schema({
+  posterName: String,
   crypto: String,
   title: String,
   NbSeat: Number,
@@ -114,6 +115,7 @@ router.get('/postAds', function(req, res, next) {
 router.post('/ad', function(req, res, next) {
   // body = JSON.parse(body);
   var newAd = new AdModel({
+    posterName: req.session.user.name,
     crypto: req.body.crypto,
     title: req.body.title,
     NbSeat: req.body.NbSeat,
@@ -126,7 +128,7 @@ router.post('/ad', function(req, res, next) {
       // res.render('index');
       AdModel.find(
         function(err, annonce) {
-          res.render('index',{dataAd: req.session.dataAd, IsLog: req.session.IsLog});
+          res.render('index',{dataAd: annonce, IsLog: req.session.IsLog, user: req.session.user});
         }
       )
 
