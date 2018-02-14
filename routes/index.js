@@ -28,7 +28,10 @@ var UserModel = mongoose.model('users', userSchema);
 
 // ad formulaire
 var AdSchema = mongoose.Schema({
+  posterName: String,
+  posterId: String,
   crypto: String,
+  cryptoP:String,
   title: String,
   NbSeat: Number,
   message: String,
@@ -41,10 +44,34 @@ var commentSchema = mongoose.Schema({
   userId: String,
   userName: String,
   adId: String,
-  message: String
+  message: String,
+  dateComment: Date
 });
 var commentModel = mongoose.model('comments', commentSchema);
 
+// Request
+var reqSchema = mongoose.Schema({
+  adId: String,
+  adTitle: String,
+  adCrypto: String,
+  posterName: String,
+  posterId: String,
+  userReqName: String,
+  userReqId: String,
+  dateRequest: Date
+});
+var reqModel = mongoose.model('request', reqSchema);
+
+
+var reqAccSchema = mongoose.Schema({
+  adId: String,
+  posterName: String,
+  posterId: String,
+  userReqName: String,
+  userReqId: String,
+  dateAccReq: Date
+});
+var reqAccModel = mongoose.model('AcceptedRequest', reqAccSchema);
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
@@ -55,7 +82,6 @@ router.get('/', function(req, res, next) {
 });
 
   })
-
 
 // GET Signup page
 router.get('/signUp', function(req, res, next) {
@@ -82,16 +108,18 @@ if (req.body.password == req.body.confirm) {
             req.session.user = user;
 
             req.session.IsLog = true;
-                res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
+
+                res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
+
                         }
                       )
-                        }else {
+                        } else {
                       req.session.IsLog = false;
                       res.render('signUp',{});
                     }
                   }
                 )
-              }else {
+              } else {
                 req.session.IsLog = false;
                 res.render('signUp');
 
@@ -105,15 +133,21 @@ router.get('/postAds', function(req, res, next) {
   res.render('postAds');
 });
 
-
-
-
 // add new ad
 
 router.post('/ad', function(req, res, next) {
+  request("https://min-api.cryptocompare.com/data/price?fsym="+req.body.crypto+"&tsyms=USD", function(error, response, body) {
+
+   body = JSON.parse(body);
+   console.log(body.usd);
+ var price = body.USD;
+
   // body = JSON.parse(body);
   var newAd = new AdModel({
+    posterName: req.session.user.name,
+    posterId: req.session.user._id,
     crypto: req.body.crypto,
+    cryptoP: body.USD,
     title: req.body.title,
     NbSeat: req.body.NbSeat,
     message: req.body.message,
@@ -123,12 +157,15 @@ router.post('/ad', function(req, res, next) {
     function(error, annonce) {
       AdModel.find(
         function(err, annonce) {
-          res.render('index',{dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
+
+          req.session.dataAd = annonce;
+          res.render('index',{dataAd: req.session.dataAd, IsLog: req.session.IsLog, user: req.session.user});
+
         }
       )
-
+  });
     });
-});
+      });
 
 
 router.get('/cardAds', function(req, res, next) {
@@ -139,7 +176,7 @@ router.get('/cardAds', function(req, res, next) {
       commentModel.find(
         {adId : req.session.oneAd._id},
         function(err, comments){
-            res.render('Ads', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments});
+            res.render('Ads', {userId:req.session.user._id, posterId: req.session.user._id,idUser: req.session.user._id,dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments});
         })
     })
 });
@@ -170,6 +207,7 @@ router.post('/login', function(req, res, next) {
 // Logout
 router.get('/logout', function(req, res, next) {
   req.session.IsLog = false;
+  console.log(req.session.dataAd);
 
   res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
 })
@@ -193,12 +231,23 @@ router.get('/logout', function(req, res, next) {
       return res.status(500).send(err);
     }
 
-  res.render('myprofile',{user: req.session.user, idUser: req.session.user._id});
+  res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, reqR:req.session.myReqR, dataAd: req.session.myAds});
   });
 });
     // ******* Get My Profile page ******
   router.get('/profile', function(req, res, next) {
-  res.render('myprofile',{user: req.session.user, idUser: req.session.user._id});
+    AdModel.find(
+      {posterId: req.session.user._id},
+      function(err, myAds){
+        req.session.myAds = myAds
+      })
+        reqModel.find(
+          {posterId: req.session.user._id},
+          function(err, myReqR){
+            req.session.myReqR = myReqR
+          res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
+          }
+    )
 });
 
 
@@ -225,7 +274,7 @@ router.get('/Editprofile', function(req, res, next) {
              var userIdTmp = req.session.user._id;
              req.session.user = req.body;
               req.session.user._id = userIdTmp;
-                res.render('myprofile', {user: req.body, idUser: req.session.user._id});
+                res.render('myprofile', {user: req.body, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
        }
        );
       } else{
@@ -253,7 +302,7 @@ router.post('/search', function(req, res){
         adSearch.push(req.session.dataAd[i]);
       }
       }
-      res.render('index', {dataAd: adSearch, IsLog: req.session.IsLog, user : req.session.user });
+      res.render('index', {search,dataAd: adSearch, IsLog: req.session.IsLog, user : req.session.user });
 });
 
 router.get('/adComment', function(req, res, next) {
@@ -261,21 +310,21 @@ router.get('/adComment', function(req, res, next) {
 });
 
 router.post('/postComment', function(req, res, next) {
-  console.log(req.session.user);
-  console.log(req.session.user._id);
+
   var newComment = new commentModel({
     userId: req.session.user._id,
     userName: req.session.user.name,
     adId: req.session.oneAd._id,
-    message: req.body.comment
+    message: req.body.comment,
+    dateComment: new Date()
   });
   newComment.save(
     function(error, comments) {
       commentModel.find(
           {adId: req.session.oneAd._id},
         function(err, comments) {
-          console.log(comments);
-          res.render('Ads', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user, comments});
+
+          res.render('Ads', {posterId: req.session.user._id,dataAd: req.session.dataAd,idUser: req.session.user._id,dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user, comments});
         }
       )
 
@@ -283,6 +332,79 @@ router.post('/postComment', function(req, res, next) {
 
 });
 
+router.get('/sendReq', function(req, res, next) {
+    console.log(req.query.id);
+AdModel.find(
+  {_id: req.query.id},
+  function(err, ad) {
+    console.log(ad);
+    var newRequest = new reqModel({
+       adId: req.query.id,
+       adTitle: ad[0].title,
+       adCrypto: ad[0].crypto,
+       posterName: ad[0].posterName,
+       posterId: ad[0].posterId,
+       userReqName: req.session.user.name,
+       userReqId: req.session.user._id,
+    });
+    newRequest.save(
+      function(error, request) {
+        console.log(request);
+res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
+      });
+  });
+  }
+)
 
+router.get('/delReq', function(req, res, next){
+    reqModel.remove(
+    {_id: req.query.id},
+    function(err) {});
+    reqModel.find(
+      {posterId: req.session.user._id},
+      function(err, myReqR){
+        req.session.myReqR = myReqR
+      res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
+      }
+)
+})
+
+router.get('/acceptReq', function(req, res, next){
+  reqModel.find(
+    {_id: req.query.id},
+    function(err, accReq) {
+      var newRequestAcc = new reqAccModel({
+         adId: req.query.id,
+         posterName: accReq[0].posterName,
+         posterId: accReq[0].posterId,
+         userReqName: accReq[0].userReqName,
+         userReqId: accReq[0].userReqId,
+      });
+      newRequestAcc.save(
+        function(error, requestAcc) {
+          reqModel.remove(
+          {_id: req.query.id},
+          function(err) {
+          reqModel.find(
+            {posterId: req.session.user._id},
+            function(err, myReqR){
+              req.session.myReqR = myReqR
+            res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
+              });
+            }
+          )
+        });
+    });
+
+    }
+  )
+
+
+// adId: String,
+// posterName: String,
+// posterId: String,
+// userReqName: String,
+// userReqId: String,
+// dateAccReq: Date
 
 module.exports = router;

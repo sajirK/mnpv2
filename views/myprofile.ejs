@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+    <link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
     <title>My profile</title>
 
     <!-- Bootstrap core CSS -->
@@ -113,7 +114,97 @@
 
     </aside>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <h2 class="text-center text-uppercase text-secondary mb-0">My Ads:</h2>
+        <hr class="star-dark mb-5">
+          <%
+    for(var i=0; i<dataAd.length; i++) {
+    %>
+          <div class="row">
+            <div class="offset-1 col-10">
+              <div class="card text-center">
+                <div class="card-header">
+                  <div class="row">
+                  <div class="col-3">
+                    Crypto
+                  </div>
+                  <div class="col-3">
+                    Seat
+                  </div>
+                  <div class="col-3">
+                    ROI
+                  </div>
+                  <div class="col-3">
+                    Price
+                  </div>
+                  </div>
+                </div>
+                <div class="card-header">
+                  <div class="row">
+                  <div class="col-3">
+                    <%=dataAd[i].crypto%>
+                  </div>
+                  <div class="col-3">
+                    <%=dataAd[i].NbSeat%>
+                  </div>
+                  <div class="col-3">
+                    248%
+                  </div>
+                  <div class="col-3">
+                    <%=dataAd[i].cryptoP*1000%>$
+                  </div>
+                  </div>
+                </div>
+                <a href="/cardAds?id=<%=dataAd[i]._id%>">
+                <div class="card-body">
+                  <h5 class="card-title"><%=dataAd[i].title%></h5>
+                  <p class="card-text"><%=dataAd[i].message%></p>
+                </div>
+                </a>
+                <div class="card-footer text-muted">
+                  <%=dataAd[i].dateAnnonce%>
+                </div>
+              </div>
+            </div>
+            </div>
+           <%}%>
+      </div>
+      <div class="col-6">
+        <h2 class="text-center text-uppercase text-secondary mb-0">My request receive:</h2>
+        <hr class="star-dark mb-5">
+        <%
+  for(var i=0; i<reqR.length; i++) {
+  %>
+        <div class="row">
+          <div class="offset-1 col-10">
+            <div class="card text-center">
+              <div class="card-body">
 
+                <h5 class="card-title"><%=reqR[i].userReqName%> want seat</h5>
+                <p class="card-text">for <%=reqR[i].adCrypto%> MN.</p>
+                <p class="card-text">Ad: <%=reqR[i].adTitle%> .</p>
+                <div class="row">
+                  <div class="col-6">
+                    <a href="/acceptReq?id=<%=reqR[i]._id%>" class="btn btn-primary">Accept</a>
+                  </div>
+                  <div class="col-6">
+                    <a href="/delReq?id=<%=reqR[i]._id%>" class="btn btn-danger">Refuse</a>
+                  </div>
+                </div>
+
+              </div>
+              <div class="card-footer text-muted">
+                <%=reqR[i].dateRequest%>
+              </div>
+            </div>
+          </div>
+          </div>
+         <%}%>
+      </div>
+    </div>
+  </div>
 
     <!-- Footer -->
     <footer class="footer text-center">
