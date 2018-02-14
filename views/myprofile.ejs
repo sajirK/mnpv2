@@ -152,7 +152,7 @@
                     248%
                   </div>
                   <div class="col-3">
-                    336$
+                    <%=dataAd[i].cryptoP*1000%>$
                   </div>
                   </div>
                 </div>
@@ -160,11 +160,10 @@
                 <div class="card-body">
                   <h5 class="card-title"><%=dataAd[i].title%></h5>
                   <p class="card-text"><%=dataAd[i].message%></p>
-                  <a href="/sendReq?id=<%=dataAd[i]._id%>" class="btn btn-primary">Reserve</a>
                 </div>
                 </a>
                 <div class="card-footer text-muted">
-                  2 days ago
+                  <%=dataAd[i].dateAnnonce%>
                 </div>
               </div>
             </div>
@@ -175,19 +174,26 @@
         <h2 class="text-center text-uppercase text-secondary mb-0">My request receive:</h2>
         <hr class="star-dark mb-5">
         <%
-  for(var i=0; i<dataAd.length; i++) {
+  for(var i=0; i<reqR.length; i++) {
   %>
         <div class="row">
           <div class="offset-1 col-10">
             <div class="card text-center">
               <div class="card-body">
-                <h5 class="card-title"><%=dataAd[i].title%></h5>
-                <p class="card-text"><%=dataAd[i].message%></p>
-                
-                <a href="/sendReq?id=<%=dataAd[i]._id%>" class="btn btn-primary">Reserve</a>
+                <h5 class="card-title"><%=reqR[i].userReqName%> want seat</h5>
+                <p class="card-text">for <%=reqR[i].adCrypto%> MN.</p>
+                <p class="card-text">Ad: <%=reqR[i].adTitle%> .</p>
+                <div class="row">
+                  <div class="col-6">
+                    <a href="/acceptReq?id=<%=reqR[i]._id%>" class="btn btn-primary">Accept</a>
+                  </div>
+                  <div class="col-6">
+                    <a href="/delReq?id=<%=reqR[i]._id%>" class="btn btn-danger">Refuse</a>
+                  </div>
+                </div>
               </div>
               <div class="card-footer text-muted">
-                2 days ago
+                <%=reqR[i].dateRequest%>
               </div>
             </div>
           </div>

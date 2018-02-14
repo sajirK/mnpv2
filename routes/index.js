@@ -52,14 +52,26 @@ var commentModel = mongoose.model('comments', commentSchema);
 // Request
 var reqSchema = mongoose.Schema({
   adId: String,
+  adTitle: String,
+  adCrypto: String,
   posterName: String,
   posterId: String,
   userReqName: String,
   userReqId: String,
-  dateAnnonce: Date
+  dateRequest: Date
 });
 var reqModel = mongoose.model('request', reqSchema);
 
+
+var reqAccSchema = mongoose.Schema({
+  adId: String,
+  posterName: String,
+  posterId: String,
+  userReqName: String,
+  userReqId: String,
+  dateAccReq: Date
+});
+var reqAccModel = mongoose.model('AcceptedRequest', reqAccSchema);
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
@@ -101,13 +113,13 @@ if (req.body.password == req.body.confirm) {
 
                         }
                       )
-                        }else {
+                        } else {
                       req.session.IsLog = false;
                       res.render('signUp',{});
                     }
                   }
                 )
-              }else {
+              } else {
                 req.session.IsLog = false;
                 res.render('signUp');
 
@@ -219,7 +231,7 @@ router.get('/logout', function(req, res, next) {
       return res.status(500).send(err);
     }
 
-  res.render('myprofile',{user: req.session.user, idUser: req.session.user._id});
+  res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, reqR:req.session.myReqR, dataAd: req.session.myAds});
   });
 });
     // ******* Get My Profile page ******
@@ -228,8 +240,13 @@ router.get('/logout', function(req, res, next) {
       {posterId: req.session.user._id},
       function(err, myAds){
         req.session.myAds = myAds
-      res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, dataAd: myAds});
-      }
+      })
+        reqModel.find(
+          {posterId: req.session.user._id},
+          function(err, myReqR){
+            req.session.myReqR = myReqR
+          res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
+          }
     )
 });
 
@@ -257,7 +274,7 @@ router.get('/Editprofile', function(req, res, next) {
              var userIdTmp = req.session.user._id;
              req.session.user = req.body;
               req.session.user._id = userIdTmp;
-                res.render('myprofile', {user: req.body, idUser: req.session.user._id, dataAd: req.session.myAds});
+                res.render('myprofile', {user: req.body, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
        }
        );
       } else{
@@ -323,6 +340,8 @@ AdModel.find(
     console.log(ad);
     var newRequest = new reqModel({
        adId: req.query.id,
+       adTitle: ad[0].title,
+       adCrypto: ad[0].crypto,
        posterName: ad[0].posterName,
        posterId: ad[0].posterId,
        userReqName: req.session.user.name,
@@ -330,13 +349,63 @@ AdModel.find(
     });
     newRequest.save(
       function(error, request) {
+        console.log(request);
 res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
       });
   });
   }
 )
 
+router.get('/delReq', function(req, res, next){
+    reqModel.remove(
+    {_id: req.query.id},
+    function(err) {});
+    reqModel.find(
+      {posterId: req.session.user._id},
+      function(err, myReqR){
+        req.session.myReqR = myReqR
+      res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
+      }
+)
+})
 
+router.get('/acceptReq', function(req, res, next){
+  reqModel.find(
+    {_id: req.query.id},
+    function(err, accReq) {
+      var newRequestAcc = new reqAccModel({
+         adId: req.query.id,
+         posterName: accReq[0].posterName,
+         posterId: accReq[0].posterId,
+         userReqName: accReq[0].userReqName,
+         userReqId: accReq[0].userReqId,
+      });
+      newRequestAcc.save(
+        function(error, requestAcc) {
+          reqModel.remove(
+          {_id: req.query.id},
+          function(err) {
+          reqModel.find(
+            {posterId: req.session.user._id},
+            function(err, myReqR){
+              req.session.myReqR = myReqR
+            res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
+              });
+            }
+          )
+        });
+    });
+
+    }
+  )
+
+
+// adId: String,
+// posterName: String,
+// posterId: String,
+// userReqName: String,
+// userReqId: String,
+// dateAccReq: Date
 
 
 module.exports = router;
