@@ -56,7 +56,7 @@ var reqSchema = mongoose.Schema({
   posterId: String,
   userReqName: String,
   userReqId: String,
-  dateAnnonce: Date
+  dateAnnonce: {type: Date, default:Date.now}
 });
 var reqModel = mongoose.model('request', reqSchema);
 
@@ -164,7 +164,7 @@ router.get('/cardAds', function(req, res, next) {
       commentModel.find(
         {adId : req.session.oneAd._id},
         function(err, comments){
-            res.render('Ads', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments});
+            res.render('Ads', {userId:req.session.user._id, posterId: req.session.user._id,idUser: req.session.user._id,dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments});
         })
     })
 });
@@ -219,7 +219,7 @@ router.get('/logout', function(req, res, next) {
       return res.status(500).send(err);
     }
 
-  res.render('myprofile',{user: req.session.user, idUser: req.session.user._id});
+  res.render('myprofile',{dataAd: req.session.dataAd,user: req.session.user, idUser: req.session.user._id});
   });
 });
     // ******* Get My Profile page ******
@@ -307,7 +307,7 @@ router.post('/postComment', function(req, res, next) {
           {adId: req.session.oneAd._id},
         function(err, comments) {
 
-          res.render('Ads', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user, comments});
+          res.render('Ads', {posterId: req.session.user._id,dataAd: req.session.dataAd,idUser: req.session.user._id,dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user, comments});
         }
       )
 
@@ -335,7 +335,6 @@ res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user 
   });
   }
 )
-
 
 
 
