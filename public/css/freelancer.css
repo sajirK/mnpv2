@@ -5,11 +5,10 @@ height: 100px;
 width: 100px;
 }
 .avatarP{
+margin-left: 100px;
 border-radius: 50%;
 height: 100px;
 width: 100px;
-padding-left: 100px;
-margin-left: 180px;
 }
 
 /* MNPool header */
@@ -475,7 +474,7 @@ a.btn-dark:hover, .btn-dark:focus, .btn-dark:active {
 }
 
 #cardAdMarginTop {
-  margin-top: 100px;
+  margin-top: 0px;
 }
 
 #titleAd {
@@ -1140,4 +1139,7 @@ body {
 	.reply-list .comment-box {
 		width: 320px;
 	}
+}
+#Compteur{
+  margin-left: : 100px;
 }
