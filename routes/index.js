@@ -22,6 +22,9 @@ var userSchema = mongoose.Schema({
   email: String,
   password: String,
   job: String,
+  linkedin:String,
+  twitter:String,
+  Discord:String,
   bio: String
 });
 var UserModel = mongoose.model('users', userSchema);
@@ -128,12 +131,12 @@ if (req.body.password == req.body.confirm) {
               );
 
 
-// Get new ad page
+//**************************** Get new ad page ****************************
 router.get('/postAds', function(req, res, next) {
   res.render('postAds');
 });
 
-// add new ad
+// **************************** add new ad ****************************
 
 router.post('/ad', function(req, res, next) {
   request("https://min-api.cryptocompare.com/data/price?fsym="+req.body.crypto+"&tsyms=USD", function(error, response, body) {
@@ -191,7 +194,7 @@ router.get('/cardAds', function(req, res, next) {
 
 
 
-// login
+//**************************** login ****************************
 router.post('/login', function(req, res, next) {
   UserModel.find(
       {name: req.body.name, password: req.body.password} ,
@@ -212,7 +215,7 @@ router.post('/login', function(req, res, next) {
   });
 });
 
-// Logout
+//**************************** Logout ****************************
 router.get('/logout', function(req, res, next) {
   req.session.IsLog = false;
   console.log(req.session.dataAd);
@@ -221,7 +224,7 @@ router.get('/logout', function(req, res, next) {
 })
 
 
- // ********file upload************
+ // ************************** file upload ****************************
  router.post('/upload', function(req, res) {
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
@@ -242,7 +245,7 @@ router.get('/logout', function(req, res, next) {
   res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, reqR:req.session.myReqR, dataAd: req.session.myAds});
   });
 });
-    // ******* Get My Profile page ******
+    // ************************** Get My Profile page ****************************
   router.get('/profile', function(req, res, next) {
     AdModel.find(
       {posterId: req.session.user._id},
@@ -259,12 +262,12 @@ router.get('/logout', function(req, res, next) {
 });
 
 
-    // *********** Get Edit My Profile page **********
+// **************************** Get Edit My Profile page ****************************
 
 router.get('/Editprofile', function(req, res, next) {
   res.render('Editprofile',{user: req.session.user});
 });
-     // ********* Save Profile Changes **********
+     // **************************** Save Profile Changes ****************************
 
 
      router.post('/SaveChange', function(req, res, next) {
@@ -277,6 +280,9 @@ router.get('/Editprofile', function(req, res, next) {
          name: req.body.name,
          password: req.body.password,
          job: req.body.job,
+         twitter: req.body.twitter,
+         Discord:req.body.Discord,
+         linkedin: req.body.linkedin,
          bio: req.body.bio},
            function(err, user){
              var userIdTmp = req.session.user._id;
@@ -290,7 +296,7 @@ router.get('/Editprofile', function(req, res, next) {
       }
   });
 
-
+// **************************** search annonce ****************************
 router.post('/search', function(req, res){
   var adSearch = [];
   var search = req.body.search;
@@ -313,9 +319,11 @@ router.post('/search', function(req, res){
       res.render('index', {search,dataAd: adSearch, IsLog: req.session.IsLog, user : req.session.user });
 });
 
+  // **************************** Get ad commentaire ****************************
 router.get('/adComment', function(req, res, next) {
   res.render('comment', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user});
 });
+// **************************** ajouter un commentaire ****************************
 
 router.post('/postComment', function(req, res, next) {
 
@@ -340,12 +348,13 @@ router.post('/postComment', function(req, res, next) {
 
 });
 
+// **************************** Request ****************************
 router.get('/sendReq', function(req, res, next) {
-    console.log(req.query.id);
+
 AdModel.find(
   {_id: req.query.id},
   function(err, ad) {
-    console.log(ad);
+
     var newRequest = new reqModel({
        adId: req.query.id,
        adTitle: ad[0].title,
@@ -364,6 +373,7 @@ res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user 
   }
 )
 
+// **************************** Supprimer la Request ****************************
 router.get('/delReq', function(req, res, next){
     reqModel.remove(
     {_id: req.query.id},
@@ -376,7 +386,7 @@ router.get('/delReq', function(req, res, next){
       }
 )
 })
-
+// **************************** Acceptation request ****************************
 router.get('/acceptReq', function(req, res, next){
   reqModel.find(
     {_id: req.query.id},

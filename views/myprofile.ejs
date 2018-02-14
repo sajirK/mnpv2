@@ -89,21 +89,21 @@
 
         <!-- twitter - el clásico  -->
         <li>
-          <a href="https://twitter.com/Hsksajir">
+          <a href="<%=user.twitter%>">
             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/social-twitter.svg">
           </a>
         </li>
 
         <!-- envato – use this one to link to your marketplace profile -->
         <li>
-          <a href="https://www.linkedin.com/in/sajir-khenissi-776434156/">
+          <a href="<%=user.linkedin%>">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiy3ER-fmqO-h2EM3ohsG-yy9rBhZbJG3Ox3vIi0uy6kCU2CJZ">
           </a>
         </li>
 
         <!-- codepen - your codepen profile-->
         <li>
-          <a href="https://discordapp.com/channels/@me">
+          <a href="<%=user.Discord%>">
             <img src="https://vignette.wikia.nocookie.net/theamazingworldofgumball/images/a/af/Discord_Logo.png/revision/latest?cb=20170105233205">
           </a>
         </li>
@@ -181,6 +181,10 @@
           <div class="offset-1 col-10">
             <div class="card text-center">
               <div class="card-body">
+
+                <h5 class="card-title"><%=dataAd[i].title%></h5>
+                <p class="card-text"><%=dataAd[i].message%></p>
+
 
                 <h5 class="card-title"><%=reqR[i].userReqName%> want seat</h5>
                 <p class="card-text">for <%=reqR[i].adCrypto%> MN.</p>
