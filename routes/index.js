@@ -176,7 +176,15 @@ router.get('/cardAds', function(req, res, next) {
       commentModel.find(
         {adId : req.session.oneAd._id},
         function(err, comments){
-            res.render('Ads', {userId:req.session.user._id, posterId: req.session.user._id,idUser: req.session.user._id,dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments});
+          req.session.comments = comments;
+          reqAccModel.find(
+            {adId : req.query.id},
+            function(err, acceptReq){
+              console.log(req.session.oneAd._id);
+              console.log(req.query.id);
+              console.log(acceptReq);
+            res.render('Ads', {userId:req.session.user._id, posterId: req.session.user._id, idUser: req.session.user._id, dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments: req.session.comments, acceptReq});
+            })
         })
     })
 });
@@ -374,7 +382,7 @@ router.get('/acceptReq', function(req, res, next){
     {_id: req.query.id},
     function(err, accReq) {
       var newRequestAcc = new reqAccModel({
-         adId: req.query.id,
+         adId: accReq[0].adId,
          posterName: accReq[0].posterName,
          posterId: accReq[0].posterId,
          userReqName: accReq[0].userReqName,
@@ -399,12 +407,5 @@ router.get('/acceptReq', function(req, res, next){
     }
   )
 
-
-// adId: String,
-// posterName: String,
-// posterId: String,
-// userReqName: String,
-// userReqId: String,
-// dateAccReq: Date
 
 module.exports = router;
