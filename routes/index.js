@@ -187,7 +187,7 @@ if (req.body.password == req.body.confirm) {
 
             req.session.IsLog = true;
 
-                res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
+                res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user });
 
                         }
                       )
@@ -199,7 +199,7 @@ if (req.body.password == req.body.confirm) {
                 )
               } else {
                 req.session.IsLog = false;
-                res.render('signUp');
+                res.render('signUp',{});
 
               }
               }
@@ -302,7 +302,7 @@ router.post('/login', function(req, res, next) {
            )
         } else {
           req.session.IsLog = false;
-          res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
+          res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, annonce, user : req.session.user });
         }
   });
 });
@@ -312,7 +312,7 @@ router.get('/logout', function(req, res, next) {
   req.session.IsLog = false;
   console.log(req.session.dataAd);
 
-  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
+  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
 })
 
 
