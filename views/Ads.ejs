@@ -176,7 +176,8 @@ p {
   <section class="portfolio" id="portfolio">
     <div class="container" id="cardAdMarginTop">
 
-      <img class="avatarP" src="./images/<%=posterId%>.png">
+
+      <img class="avatarP" src="./images/<%=dataAd.posterId%>.png">
 
       <h4 class="text-center text-uppercase text-secondary mb-0">Ad informations</h4>
       <hr class="star-dark mb-5">
@@ -196,10 +197,12 @@ p {
           <div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: <%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>%" aria-valuenow= "<%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>" aria-valuemin="0" aria-valuemax="<%=dataAd.NbSeat*10%>"><%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>%</div></div>
         </div>
         <div class="offset-2 col-8">
-          <h5>ROI : 260%</h5>
+
+          <h5>ROI : <%=dataAd.roi%></h5>
         </div>
         <div class="offset-2 col-8">
-          <h5>Price : <%=dataAd.cryptoP*1000%>$</h5>
+          <h5>MnWorth : <%=dataAd.MnWorth%></h5>
+
         </div>
         <div class="offset-2 col-8">
           <h5>Reserved seat:</h5>
@@ -252,7 +255,7 @@ for (var i=0; i<comments.length; i++) {
 
 				<div class="comment-block">
           <div class="photo" >
-              <div class="avatar" style="background-image: url('./images/<%=comments[i].userId%>.png')">
+              <div class="avatar" src="./images/<%=comments[i].posterId%>.png">
               </div>
           </div>
 						<p class="comment-text"><%=comments[i].message%></p>

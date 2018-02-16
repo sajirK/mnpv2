@@ -71,18 +71,16 @@
                                         <label>Choose a Crypto from this list:
                                       <input  list="Crypto" name="crypto" /></label>
                                       <datalist id="Crypto">
-                                        <option value="LUX">
-                                        <option value="DASH">
-                                        <option value="BWK">
-                                          <option value="BLOCK">
-                                        <option value="WTC">
-                                        <option value="MUE">
-                                        <option value="XLR">
-                                        <option value="SUB">
+                                        <%
+                                        for (var i=1 ; i<scrap.length ; i++) {
+                                        %>
+                                        <option value="<%=scrap[i].name%>">
+                                        <%}%>
                                       </datalist>
 
                                             </div>
                                           <div class="col-md-6">
+                                            <label>Number of seat:</label>
                                             <select name="NbSeat">
                                               <option value="1">1</option>
                                               <option value="2">2</option>
