@@ -5,10 +5,11 @@ height: 100px;
 width: 100px;
 }
 .avatarP{
-margin-left: 100px;
+margin-left: 190px;
 border-radius: 50%;
 height: 100px;
 width: 100px;
+
 }
 
 /* MNPool header */
@@ -98,11 +99,11 @@ hr.star-light:after {
 }
 
 hr.star-dark {
-  border-color: #2C3E50;
+  border-color: white;
 }
 
 hr.star-dark:after {
-  color: #2C3E50;
+  color: white;
   /* background-color: #D0EDDC; */
 }
 
@@ -414,8 +415,12 @@ a:focus, a:hover, a:active {
 
 .text-secondary {
   color: #2c3e50 !important;
-}
 
+}
+.text-secondary2 {
+  color: #2c3e50 !important;
+  padding-left: 88px;
+}
 /* button */
 .btn-outline-dark {
   background-color: white;
@@ -848,9 +853,7 @@ aside:hover ul li:nth-child(3) {
   padding-top: 0px;
 
 
-#searchBar{
-  margin-top: 40px;
-}
+
 
 .padding-left {
   padding-left: 90px;
@@ -1139,7 +1142,4 @@ body {
 	.reply-list .comment-box {
 		width: 320px;
 	}
-}
-#Compteur{
-  margin-left: : 100px;
 }
