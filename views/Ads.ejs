@@ -159,6 +159,11 @@ p {
         <div class="offset-3 col-8">
           <h1 id="head">MNPooL</h1>
         </div>
+        <!-- <ul class="navbar-nav ml-auto">
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/profile">Welcome, <%=user.name%></a>
+          </li>
+        </ul> -->
         <ul class="navbar-nav ml-auto">
           <li class="nav-item mx-0 mx-lg-1">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/logout">Logout</a>
@@ -171,29 +176,30 @@ p {
   <section class="portfolio" id="portfolio">
     <div class="container" id="cardAdMarginTop">
 
-      <img class="avatarP" src="./images/<%=idUser%>.png">
+      <img class="avatarP" src="./images/<%=posterId%>.png">
 
       <h4 class="text-center text-uppercase text-secondary mb-0">Ad informations</h4>
       <hr class="star-dark mb-5">
       <div class="row">
           <div class="offset-2 col-8">
-            <h5>Poster : <%=dataAd.posterName%></h5>
+            <h5>Posted by  : '<%=dataAd.posterName%>'</h5>
           </div>
         <div class="offset-2 col-8">
           <h5>Crypto : <%=dataAd.crypto%></h5>
         </div>
         <div class="offset-2 col-8">
-          <h5>Free Seat : <%=dataAd.NbSeat-acceptReq.length%> / <%=dataAd.NbSeat%></h5>
+          <!-- <h5>Seat left : <%=dataAd.NbSeat-acceptReq.length%> / <%=dataAd.NbSeat%></h5> -->
+          <h5>Seat left : <%=dataAd.NbSeat-acceptReq.length%></h5>
         </div>
         <div class="offset-2 col-8">
           <h5>Reserved :</h5>
           <div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: <%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>%" aria-valuenow= "<%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>" aria-valuemin="0" aria-valuemax="<%=dataAd.NbSeat*10%>"><%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>%</div></div>
         </div>
         <div class="offset-2 col-8">
-          <h5>ROI : </h5>
+          <h5>ROI : 260%</h5>
         </div>
         <div class="offset-2 col-8">
-          <h5>Price : <%=dataAd.cryptoP%></h5>
+          <h5>Price : <%=dataAd.cryptoP*1000%>$</h5>
         </div>
         <div class="offset-2 col-8">
           <h5>Reserved seat:</h5>

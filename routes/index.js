@@ -183,10 +183,8 @@ router.get('/cardAds', function(req, res, next) {
           reqAccModel.find(
             {adId : req.query.id},
             function(err, acceptReq){
-              console.log(req.session.oneAd._id);
-              console.log(req.query.id);
-              console.log(acceptReq);
-            res.render('Ads', {userId:req.session.user._id, posterId: req.session.user._id, idUser: req.session.user._id, dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments: req.session.comments, acceptReq});
+             req.session.acceptReq=acceptReq;
+            res.render('Ads', {userId:req.session.user._id, posterId: req.session.user._id, idUser: req.session.user._id, dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments: req.session.comments, acceptReq,user : req.session.user});
             })
         })
     })
@@ -340,7 +338,7 @@ router.post('/postComment', function(req, res, next) {
           {adId: req.session.oneAd._id},
         function(err, comments) {
 
-          res.render('Ads', {posterId: req.session.user._id,dataAd: req.session.dataAd,idUser: req.session.user._id,dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user, comments});
+          res.render('Ads', {posterId: req.query.user._id,dataAd: req.session.dataAd,idUser: req.session.user._id,dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user, comments,acceptReq:req.session.acceptReq});
         }
       )
 
