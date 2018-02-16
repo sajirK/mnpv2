@@ -270,6 +270,7 @@ router.get('/cardAds', function(req, res, next) {
           reqAccModel.find(
             {adId : req.query.id},
             function(err, acceptReq){
+
               req.session.acceptReq = acceptReq;
               for (var i = 0; i < req.session.dataAd.length; i++) {
                if (req.session.dataAd[i]._id == req.session.oneAd._id) {
@@ -277,6 +278,7 @@ router.get('/cardAds', function(req, res, next) {
                  res.render('Ads', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments: req.session.comments, acceptReq: req.session.acceptReq});
                }
               }
+
             })
         })
     })
@@ -430,7 +432,9 @@ router.post('/postComment', function(req, res, next) {
           {adId: req.session.oneAd._id},
         function(err, comments) {
 
+
           res.render('Ads', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user, comments, acceptReq: req.session.acceptReq});
+
         }
       )
 

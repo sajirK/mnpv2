@@ -72,15 +72,14 @@
             <%
           } else {
             %>
+
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/profile">portfolio</a>
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/profile">Welcome, <%=user.name%></a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/logout">logout</a>
             </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/profile">Welcome, <%=user.name%></a>
-            </li>
+
             <%  }%>
           </ul>
         </div>
@@ -95,7 +94,6 @@
      %>
    <div class="row">
      <div class="offset-7 col-5">
-         <!-- <h5>Welcome <%=user.name%></h5> -->
      </div>
    </div>
    <%}%>
@@ -123,7 +121,7 @@
         <hr class="star-dark mb-5">
         <div class="row">
           <div class="col-9">
-            <h3 id="Compteur" class="text-secondary mb-0"><%=dataAd.length%> ads online</h3>
+            <h3  class="text-secondary2 mb-0 "><%=dataAd.length%> ads online</h3>
           </div>
           <%
           if (IsLog == true) {
@@ -134,9 +132,9 @@
             <%}%>
           </div>
           <div class="row" id="searchBar">
-    <div class="offset-1 col-4 padding-left" >
-             <form class="form" action="/search" method="post">
-             <input type="text" name="search" class="btn btn-outline-dark" value="" placeholder="Search ads">
+    <div class="offset-1" >
+             <form id="SR" class="form" action="/search" method="post">
+             <input  type="text" name="search" class="btn btn-outline-dark" value="" placeholder="Search ads">
              <button type="submit" class="btn btn-dark" name="btnSearch">Valid</button>
           </form>
     </div>
@@ -176,6 +174,7 @@
                   <%=dataAd[i].roi%>
                 </div>
                 <div class="col-3">
+
                   <%=dataAd[i].MnWorth%>
 
                 </div>
