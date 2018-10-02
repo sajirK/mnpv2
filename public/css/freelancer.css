@@ -1,14 +1,14 @@
 /* my profile img */
 .avatar{
- border-radius: 50%;
-height: 100px;
-width: 100px;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
 }
 .avatarP{
-margin-left: 190px;
-border-radius: 50%;
-height: 100px;
-width: 100px;
+  margin-left: 190px;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
 
 }
 
@@ -22,11 +22,11 @@ h1{
 }
 h6{
   font-weight: 700;
-font-family: Montserrat;
-margin-top: 100px;
-margin-right: 10px;
-float: right;
-color: blue;
+  font-family: Montserrat;
+  margin-top: 100px;
+  margin-right: 10px;
+  float: right;
+  color: blue;
 }
 .btn.btn-dark{
   float: right;
@@ -241,8 +241,8 @@ header.masthead h2 {
     padding-bottom: 6rem;
   }
   header.masthead h1 {
-    font-size: 4.75em;
-    line-height: 4rem;
+    font-size: 4em;
+    /* line-height: 4rem; */
   }
   header.masthead h2 {
     font-size: 1.75em;
@@ -392,17 +392,61 @@ a {
 }
 
 a:focus, a:hover, a:active {
-  color: #128f76;
+  /* color: #128f76; */
 }
 
 .btn {
   border-width: 2px;
 }
 
+
 /* the green background */
 .bg-primary {
-
-  background-color: #28BB9C !important;
+  background-image:url(http://www.epsi.fr/wp-content/uploads/2017/02/epsi_slider_1.jpg);
+  background-size: cover;
+}
+.banner{
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+   display: flex;
+   justify-content: center;
+   color: #fff;
+}
+.banner:after{
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  bottom: 0;
+}
+.banner:before {
+  content: '';
+width: 100%;
+height: 100%;
+position: absolute;
+left: 0;
+top: 0;
+-webkit-backface-visibility: hidden;
+-moz-backface-visibility: hidden;
+-ms-backface-visibility: hidden;
+backface-visibility: hidden;
+-webkit-transform: translateZ(0)scale(1.0, 1.0);
+-moz-transform: translateZ(0)scale(1.0, 1.0);
+-ms-transform: translateZ(0)scale(1.0, 1.0);
+-o-transform: translateZ(0)scale(1.0, 1.0);
+transform: translateZ(0)scale(1.0, 1.0);
+}
+/* figure {
+  width: 100%;
+  position: absolute;
+  margin: 0;padding: 350px;
+  left: 0;
+  bottom: 0px;
+} */
+@keyframes backgroundScroll {
+    from {background-position: 0 0;}
+    to {background-position: -180px 0px;}
 }
 
 .bg-secondary {
@@ -545,7 +589,7 @@ header {
   text-align: center;
 }
 
-header h1 {
+/* header h1 {
   position: relative;
   text-align: center;
   color: #fff;
@@ -555,8 +599,29 @@ header h1 {
   display: inline-block;
   padding: 10px;
   transition: all ease 0.250s;
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #fff;
+  background-color: red;
+  opacity: 0.5;
+  border-radius: 25% 10%;
+  width: 1111px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+} */
+.h1_home {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+  font-size: 25px;
+  line-height: 25px;
+  display: inline-block;
+  padding: 10px;
+  transition: all ease 0.250s;
+  background-color: red;
+  opacity: 0.5;
+  border-radius: 25% 10%;
+  width: 1111px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 aside:hover header h1 {
@@ -606,11 +671,57 @@ aside:hover .profile-bio {
 }
 
 aside:hover .profile-social-links {
-  margin-left: -30px;
+  margin-left: 10px;
   opacity: 1;
 }
 
+.edit {
+    display: flex;
+    float: right;
+    padding-right: 7px;
+}
+.myButton {
+	-moz-box-shadow:inset 0px 0px 0px 0px #5ce817;
+	-webkit-box-shadow:inset 0px 0px 0px 0px #5ce817;
+	box-shadow:inset 0px 0px 0px 0px #5ce817;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ff0000), color-stop(1, #ff0000));
+	background:-moz-linear-gradient(top, #ff0000 5%, #ff0000 100%);
+	background:-webkit-linear-gradient(top, #ff0000 5%, #ff0000 100%);
+	background:-o-linear-gradient(top, #ff0000 5%, #ff0000 100%);
+	background:-ms-linear-gradient(top, #ff0000 5%, #ff0000 100%);
+	background:linear-gradient(to bottom, #ff0000 5%, #ff0000 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#ff0000',GradientType=0);
+	background-color:#ff0000;
+	-moz-border-radius:13px;
+	-webkit-border-radius:13px;
+	border-radius:13px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	padding:14px 76px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #36a1c2;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ff0000), color-stop(1, #ff0000));
+	background:-moz-linear-gradient(top, #ff0000 5%, #ff0000 100%);
+	background:-webkit-linear-gradient(top, #ff0000 5%, #ff0000 100%);
+	background:-o-linear-gradient(top, #ff0000 5%, #ff0000 100%);
+	background:-ms-linear-gradient(top, #ff0000 5%, #ff0000 100%);
+	background:linear-gradient(to bottom, #ff0000 5%, #ff0000 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#ff0000',GradientType=0);
+	background-color:#ff0000;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+
 .profile-social-links li img {
+  margin-bottom: 10px;
   width: 30px;
   background: #fff;
   border-radius: 50%;
@@ -840,10 +951,10 @@ aside:hover ul li:nth-child(3) {
 }
 /* ******* Pading Home ******* */
 #page-top{
-  margin-top: 100px;
+  /* margin-top: 100px;
   padding-left: 0px;
   padding-right: 0px;
-  padding-top: 0px;
+  padding-top: 0px; */
 }
   /* ******* Profile ****** */
 #page-topP{
@@ -851,10 +962,7 @@ aside:hover ul li:nth-child(3) {
   padding-left: 0px;
   padding-right: 0px;
   padding-top: 0px;
-
-
-
-
+}
 .padding-left {
   padding-left: 90px;
 }
@@ -884,7 +992,7 @@ aside:hover ul li:nth-child(3) {
  * Fondo: #dee1e3
  ----------------------------------*/
  * {
-     margin: 0;
+  margin: 0;
  	padding: 0;
  	-webkit-box-sizing: border-box;
  	-moz-box-sizing: border-box;
@@ -892,7 +1000,6 @@ aside:hover ul li:nth-child(3) {
  }
 
  a {
- 	color: #03658c;
  	text-decoration: none;
  }
 

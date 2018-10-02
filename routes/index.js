@@ -95,9 +95,8 @@ var reqAccModel = mongoose.model('AcceptedRequest', reqAccSchema);
 //      }
 //    });
 // }
-
+/******************************************* GET home page/ Scraping ***************************/
 router.get('/', function(req, res, next) {
-
   AdModel.find(function(error, dataAd){
   req.session.dataAd = dataAd;
   //req.session.cryptoP = [];
@@ -302,7 +301,7 @@ router.post('/login', function(req, res, next) {
            )
         } else {
           req.session.IsLog = false;
-          res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, annonce, user : req.session.user });
+          res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user });
         }
   });
 });

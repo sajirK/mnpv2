@@ -34,14 +34,14 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="/"><img src="/img/logo_mnp/MNP-01v2.png" id="logo"></a>
+        <a class="navbar-brand js-scroll-trigger" href="/"><img src="https://www.studapart.com/sites/default/files/styles/medium_16_9/public/2018-04/epsi-logo-hd.jpg?itok=1rW51LUt" id="logo"></a>
         <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <div class="offset-3 col-8">
-              <h1 id="head">MNPooL</h1>
+              <h1 id="head">My profile</h1>
             </div>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item mx-0 mx-lg-1">
@@ -64,8 +64,8 @@
       <header>
 
         <!-- here’s the avatar -->
-
-          <img id="profilImg" src="./images/<%=idUser%>.png">
+         <a href="/Editprofile"><h2 class="edit">Editer</h2></a>
+        <img id="profilImg" src="./images/<%=idUser%>.png">
 
 
         <!-- the username -->
@@ -89,21 +89,21 @@
 
         <!-- twitter - el clásico  -->
         <li>
-          <a href="<%=user.twitter%>">
+          <a target="_blank" href="<%=user.twitter%>">
             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/social-twitter.svg">
           </a>
         </li>
 
         <!-- envato – use this one to link to your marketplace profile -->
         <li>
-          <a href="<%=user.linkedin%>">
+          <a target="_blank" href="<%=user.linkedin%>">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiy3ER-fmqO-h2EM3ohsG-yy9rBhZbJG3Ox3vIi0uy6kCU2CJZ">
           </a>
         </li>
 
         <!-- codepen - your codepen profile-->
         <li>
-          <a href="<%=user.Discord%>">
+          <a target="_blank" href="<%=user.Discord%>">
             <img src="https://vignette.wikia.nocookie.net/theamazingworldofgumball/images/a/af/Discord_Logo.png/revision/latest?cb=20170105233205">
           </a>
         </li>
@@ -114,7 +114,7 @@
 
     </aside>
 
-  <div class="container">
+  <!-- <div class="container">
     <div class="row">
       <div class="col-6">
         <h2 class="text-center text-uppercase text-secondary mb-0">My Ads:</h2>
@@ -208,7 +208,7 @@
          <%}%>
       </div>
     </div>
-  </div>
+  </div> -->
 
     <!-- Footer -->
     <footer class="footer text-center">
@@ -251,7 +251,7 @@
           </div>
           <div class="col-md-4">
             <h4 class="text-uppercase mb-4">About US</h4>
-            <p class="lead mb-0">MNPooL is a free use platform to share Masternodes
+            <p class="lead mb-0">
           </div>
         </div>
       </div>
@@ -259,7 +259,7 @@
 
     <div class="copyright py-4 text-center text-white">
       <div class="container">
-        <small>Copyright &copy; MNPooL 2018</small>
+        <small>Copyright &copy;  2018</small>
       </div>
     </div>
 
