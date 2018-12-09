@@ -183,9 +183,6 @@ router.get('/cardAds', function(req, res, next) {
           reqAccModel.find(
             {adId : req.query.id},
             function(err, acceptReq){
-              console.log(req.session.oneAd._id);
-              console.log(req.query.id);
-              console.log(acceptReq);
             res.render('Ads', {userId:req.session.user._id, posterId: req.session.user._id, idUser: req.session.user._id, dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments: req.session.comments, acceptReq});
             })
         })
