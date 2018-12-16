@@ -9,32 +9,33 @@ var options = {
     }
   }
 };
-mongoose.connect('mongodb://mnp:azerty22@ds225308.mlab.com:25308/masternodepooldatabase',
+// mongoose.connect('mongodb://mnp:azerty22@ds225308.mlab.com:25308/masternodepooldatabase',
+mongoose.connect('mongodb://mnp:azerty22@ds231374.mlab.com:31374/masternodepooldatabase',
   options,
-  function(err) {
+  function (err) {
     console.log(err);
   }
 );
 
-   // user base de donnée
+//************************** user base de donnée **************************
 var userSchema = mongoose.Schema({
   name: String,
   email: String,
   password: String,
   job: String,
-  linkedin:String,
-  twitter:String,
-  Discord:String,
+  linkedin: String,
+  twitter: String,
+  Discord: String,
   bio: String
 });
 var UserModel = mongoose.model('users', userSchema);
 
-// ad formulaire
+//************************** ad formulaire **************************
 var AdSchema = mongoose.Schema({
   posterName: String,
   posterId: String,
   crypto: String,
-  cryptoP:String,
+  cryptoP: String,
   title: String,
   NbSeat: Number,
   message: String,
@@ -42,7 +43,7 @@ var AdSchema = mongoose.Schema({
 });
 var AdModel = mongoose.model('annonce', AdSchema);
 
-// ad comments
+// ************************** ad comments **************************
 var commentSchema = mongoose.Schema({
   userId: String,
   userName: String,
@@ -52,7 +53,7 @@ var commentSchema = mongoose.Schema({
 });
 var commentModel = mongoose.model('comments', commentSchema);
 
-// Request
+// ************************** Request **************************
 var reqSchema = mongoose.Schema({
   adId: String,
   adTitle: String,
@@ -75,115 +76,111 @@ var reqAccSchema = mongoose.Schema({
   dateAccReq: Date
 });
 var reqAccModel = mongoose.model('AcceptedRequest', reqAccSchema);
-/* GET home page. */
+/* ************************** GET home page. ***************************/
 
 router.get('/', function(req, res, next) {
 
-  AdModel.find(function(error, dataAd){
-  req.session.dataAd = dataAd;
-  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
-});
+  AdModel.find(function(error, dataAd) {
+    req.session.dataAd = dataAd;
+    res.render('index', { dataAd: req.session.dataAd, IsLog: req.session.IsLog, user: req.session.user });
+  });
 
-  })
+})
 
-// GET Signup page
+// ************************** GET Signup page **************************
 router.get('/signUp', function(req, res, next) {
   res.render('signUp');
 });
 
-   // user form database
-router.post('/signUp', function(req, res, next) {
-if (req.body.password == req.body.confirm) {
+// ************************** user form database **************************
+router.post('/signUp', function (req, res, next) {
+  if (req.body.password == req.body.confirm) {
 
+    UserModel.find(
+      { email: req.body.email },
+      function (err, users) {
+        if (users.length == 0) {
 
-  UserModel.find(
-    {email: req.body.email},
-    function(err, users) {
-      if (users.length == 0) {
+          var newUser = new UserModel({
+            name: req.body.username,
+            email: req.body.email,
+            password: req.body.password
+          });
+          newUser.save(
+            function (error, user) {
+              req.session.user = user;
+              req.session.IsLog = true;
+              res.render('index', { dataAd: req.session.dataAd, IsLog: req.session.IsLog, user: req.session.user });
 
-        var newUser = new UserModel({
-          name: req.body.username,
-          email: req.body.email,
-          password: req.body.password
-        });
-        newUser.save(
-          function(error, user) {
-            req.session.user = user;
+            }
+          )
+        } else {
+          req.session.IsLog = false;
+          res.render('signUp',{});
+        }
+      }
+    )
+  } else {
+    req.session.IsLog = false;
+    res.render('signUp');
 
-            req.session.IsLog = true;
-
-                res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
-
-                        }
-                      )
-                        } else {
-                      req.session.IsLog = false;
-                      res.render('signUp',{});
-                    }
-                  }
-                )
-              } else {
-                req.session.IsLog = false;
-                res.render('signUp');
-
-              }
-              }
-              );
+  }
+}
+);
 
 
 //**************************** Get new ad page ****************************
-router.get('/postAds', function(req, res, next) {
+router.get('/postAds', function (req, res, next) {
   res.render('postAds');
 });
 
 // **************************** add new ad ****************************
 
 router.post('/ad', function(req, res, next) {
-  request("https://min-api.cryptocompare.com/data/price?fsym="+req.body.crypto+"&tsyms=USD", function(error, response, body) {
+  request("https://min-api.cryptocompare.com/data/price?fsym=" + req.body.crypto + "&tsyms=USD", function(error, response, body) {
 
-   body = JSON.parse(body);
-   console.log(body.usd);
- var price = body.USD;
+    body = JSON.parse(body);
+    var price = body.USD;
 
-  // body = JSON.parse(body);
-  var newAd = new AdModel({
-    posterName: req.session.user.name,
-    posterId: req.session.user._id,
-    crypto: req.body.crypto,
-    cryptoP: body.USD,
-    title: req.body.title,
-    NbSeat: req.body.NbSeat,
-    message: req.body.message,
-    dateAnnonce: new Date()
-  });
-  newAd.save(
-    function(error, annonce) {
-      AdModel.find(
-        function(err, annonce) {
-
-          req.session.dataAd = annonce;
-          res.render('index',{dataAd: req.session.dataAd, IsLog: req.session.IsLog, user: req.session.user});
-
-        }
-      )
-  });
+    // body = JSON.parse(body);
+    var newAd = new AdModel({
+      posterName: req.session.user.name,
+      posterId: req.session.user._id,
+      crypto: req.body.crypto,
+      cryptoP: body.USD,
+      title: req.body.title,
+      NbSeat: req.body.NbSeat,
+      message: req.body.message,
+      dateAnnonce: new Date()
     });
+    newAd.save(
+      function (error, annonce) {
+        AdModel.find(
+          function (err, annonce) {
+
+            req.session.dataAd = annonce;
+            res.render('index', { dataAd: req.session.dataAd, IsLog: req.session.IsLog, user: req.session.user });
+
+          }
+        )
       });
+  });
+});
 
 
-router.get('/cardAds', function(req, res, next) {
+router.get('/cardAds', function (req, res, next) {
   AdModel.find(
-    {_id : req.query.id},
-    function(err, oneAd){
+    { _id: req.query.id },
+    function (err, oneAd) {
       req.session.oneAd = oneAd[0];
       commentModel.find(
-        {adId : req.session.oneAd._id},
-        function(err, comments){
+        { adId: req.session.oneAd._id },
+        function (err, comments) {
           req.session.comments = comments;
           reqAccModel.find(
-            {adId : req.query.id},
-            function(err, acceptReq){
-            res.render('Ads', {userId:req.session.user._id, posterId: req.session.user._id, idUser: req.session.user._id, dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments: req.session.comments, acceptReq});
+            { adId: req.query.id },
+            function (err, acceptReq) {
+              res.render('Ads', { userId: req.session.user._id, posterId: req.session.user._id, idUser: req.session.user._id, dataAd: req.session.oneAd, IsLog: req.session.IsLog, comments: req.session.comments, acceptReq});
             })
         })
     })
@@ -194,131 +191,128 @@ router.get('/cardAds', function(req, res, next) {
 //**************************** login ****************************
 router.post('/login', function(req, res, next) {
   UserModel.find(
-      {name: req.body.name, password: req.body.password} ,
-      function (err, users) {
-        if(users.length > 0) {
-          req.session.user = users[0];
-          req.session.IsLog = true;
-          AdModel.find(
-               // {user_id: req.session.user._id},
-               function (error,annonce) {
-                 res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, annonce, user : req.session.user });
-               }
-           )
-        } else {
-          req.session.IsLog = false;
-          res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
-        }
-  });
+    { name: req.body.name, password: req.body.password },
+    function (err, users) {
+      if (users.length > 0) {
+        req.session.user = users[0];
+        req.session.IsLog = true;
+        AdModel.find(
+          // {user_id: req.session.user._id},
+          function (error, annonce) {
+            res.render('index', { dataAd: req.session.dataAd, IsLog: req.session.IsLog, annonce, user: req.session.user });
+          }
+        )
+      } else {
+        req.session.IsLog = false;
+        res.render('index', { dataAd: req.session.dataAd, IsLog: req.session.IsLog });
+      }
+    });
 });
 
 //**************************** Logout ****************************
-router.get('/logout', function(req, res, next) {
+router.get('/logout', function (req, res, next) {
   req.session.IsLog = false;
-  console.log(req.session.dataAd);
-
-  res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog});
+  res.render('index', { dataAd: req.session.dataAd, IsLog: req.session.IsLog });
 })
 
 
- // ************************** file upload ****************************
- router.post('/upload', function(req, res) {
+// ************************** file upload ****************************
+router.post('/upload', function (req, res) {
   if (!req.files) {
     return res.status(400).send('No files were uploaded.');
   }
   let avatar = req.files.avatar;
+  let idUser = req.session.user._id;
 
-  console.log(req.session.user._id);
-  let idUser =req.session.user._id;
-
-  // Use the mv() method to place the file somewhere on your server
-  avatar.mv('./public/images/' + idUser + '.png', function(err) {
-  // avatar.mv('./public/images/avatar.png', function(err) {
+  // save the avatar image on the server using the mv() method
+  avatar.mv('./public/images/' + idUser + '.png', function (err) {
     if (err) {
-      console.log(idUser);
       return res.status(500).send(err);
     }
 
-  res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, reqR:req.session.myReqR, dataAd: req.session.myAds});
+    res.render('myprofile', { user: req.session.user, idUser: req.session.user._id, reqR: req.session.myReqR, dataAd: req.session.myAds });
   });
 });
-    // ************************** Get My Profile page ****************************
-  router.get('/profile', function(req, res, next) {
-    AdModel.find(
-      {posterId: req.session.user._id},
-      function(err, myAds){
-        req.session.myAds = myAds
-      })
-        reqModel.find(
-          {posterId: req.session.user._id},
-          function(err, myReqR){
-            req.session.myReqR = myReqR
-          res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
-          }
-    )
+// ************************** Get My Profile page ****************************
+router.get('/profile', function (req, res, next) {
+
+  AdModel.find(
+    { posterId: req.session.user._id },
+    function (err, myAds) {
+      req.session.myAds = myAds
+    });
+  reqModel.find(
+    { posterId: req.session.user._id },
+    function (err, myReqR) {
+      req.session.myReqR = myReqR;
+      res.render('myprofile', { user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR: req.session.myReqR });
+    }
+  )
 });
 
 
-// **************************** Get Edit My Profile page ****************************
+// **************************** Get Edit Profile page ****************************
 
-router.get('/Editprofile', function(req, res, next) {
-  res.render('Editprofile',{user: req.session.user});
+router.get('/Editprofile', function (req, res, next) {
+  res.render('Editprofile', { user: req.session.user });
 });
-     // **************************** Save Profile Changes ****************************
+// **************************** Save Profile Changes ****************************
 
 
-     router.post('/SaveChange', function(req, res, next) {
-       if(req.body.email.length > 0 &&
-          req.body.name.length > 0 &&
-           req.body.password.length > 0 &&
-            req.body.password == req.body.confirm){
-       UserModel.update({_id: req.session.user._id},
-         {email: req.body.email,
-         name: req.body.name,
-         password: req.body.password,
-         job: req.body.job,
-         twitter: req.body.twitter,
-         Discord:req.body.Discord,
-         linkedin: req.body.linkedin,
-         bio: req.body.bio},
-           function(err, user){
-             var userIdTmp = req.session.user._id;
-             req.session.user = req.body;
-              req.session.user._id = userIdTmp;
-                res.render('myprofile', {user: req.body, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
-       }
-       );
-      } else{
-        res.render('Editprofile', {user: req.session.user});
+router.post('/SaveChange', function (req, res, next) {
+  if (req.body.email.length > 0 &&
+    req.body.name.length > 0 &&
+    req.body.password.length > 0 &&
+    req.body.password == req.body.confirm) {
+    UserModel.update({ _id: req.session.user._id },
+      {
+        email: req.body.email,
+        name: req.body.name,
+        password: req.body.password,
+        job: req.body.job,
+        twitter: req.body.twitter,
+        Discord: req.body.Discord,
+        linkedin: req.body.linkedin,
+        bio: req.body.bio
+      },
+      function (err, user) {
+        var userIdTmp = req.session.user._id;
+        req.session.user = req.body;
+        req.session.user._id = userIdTmp;
+        res.render('myprofile', { user: req.body, idUser: req.session.user._id, dataAd: req.session.myAds, reqR: req.session.myReqR });
       }
-  });
+    );
+  } else {
+    res.render('Editprofile', { user: req.session.user });
+  }
+});
 
 // **************************** search annonce ****************************
-router.post('/search', function(req, res){
+router.post('/search', function (req, res) {
   var adSearch = [];
   var search = req.body.search;
-      search = search.toUpperCase();
-     for (var i = 0; i < req.session.dataAd.length; i++) {
-      var title = JSON.stringify(req.session.dataAd[i].title)
-          title = title.toUpperCase();
-      var message = JSON.stringify(req.session.dataAd[i].message)
-          message = message.toUpperCase();
-      var crypto = JSON.stringify(req.session.dataAd[i].crypto)
-          crypto = crypto.toUpperCase();
-      var NbSeat = JSON.stringify(req.session.dataAd[i].NbSeat)
-      if (title.includes(search) ||
-       message.includes(search) ||
-       crypto.includes(search) ||
-       NbSeat.includes(search)) {
-        adSearch.push(req.session.dataAd[i]);
-      }
-      }
-      res.render('index', {search,dataAd: adSearch, IsLog: req.session.IsLog, user : req.session.user });
+  search = search.toUpperCase();
+  for (var i = 0; i < req.session.dataAd.length; i++) {
+    var title = JSON.stringify(req.session.dataAd[i].title)
+    title = title.toUpperCase();
+    var message = JSON.stringify(req.session.dataAd[i].message)
+    message = message.toUpperCase();
+    var crypto = JSON.stringify(req.session.dataAd[i].crypto)
+    crypto = crypto.toUpperCase();
+    var NbSeat = JSON.stringify(req.session.dataAd[i].NbSeat)
+    if (title.includes(search) ||
+      message.includes(search) ||
+      crypto.includes(search) ||
+      NbSeat.includes(search)) {
+      adSearch.push(req.session.dataAd[i]);
+    }
+  }
+  res.render('index', { search, dataAd: adSearch, IsLog: req.session.IsLog, user: req.session.user });
 });
 
-  // **************************** Get ad commentaire ****************************
+// **************************** Get ad commentaire ****************************
 router.get('/adComment', function(req, res, next) {
-  res.render('comment', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user});
+  res.render('comment', {dataAd: req.session.oneAd, IsLog: req.session.IsLog, user: req.session.user});
 });
 // **************************** ajouter un commentaire ****************************
 
@@ -334,85 +328,82 @@ router.post('/postComment', function(req, res, next) {
   newComment.save(
     function(error, comments) {
       commentModel.find(
-          {adId: req.session.oneAd._id},
-        function(err, comments) {
-
-          res.render('Ads', {posterId: req.session.user._id,dataAd: req.session.dataAd,idUser: req.session.user._id,dataAd: req.session.oneAd, IsLog: req.session.IsLog, user : req.session.user, comments});
+        { adId: req.session.oneAd._id },
+        function (err, comments) {
+          res.render('Ads', { posterId: req.session.user._id, dataAd: req.session.dataAd, idUser: req.session.user._id, dataAd: req.session.oneAd, IsLog: req.session.IsLog, user: req.session.user, comments });
         }
       )
 
     });
-
 });
 
 // **************************** Request ****************************
-router.get('/sendReq', function(req, res, next) {
+     
+router.get('/sendReq', function (req, res, next) {
 
-AdModel.find(
-  {_id: req.query.id},
-  function(err, ad) {
-
-    var newRequest = new reqModel({
-       adId: req.query.id,
-       adTitle: ad[0].title,
-       adCrypto: ad[0].crypto,
-       posterName: ad[0].posterName,
-       posterId: ad[0].posterId,
-       userReqName: req.session.user.name,
-       userReqId: req.session.user._id,
-    });
-    newRequest.save(
-      function(error, request) {
-        console.log(request);
-res.render('index', {dataAd: req.session.dataAd, IsLog: req.session.IsLog, user : req.session.user});
+  AdModel.find(
+    { _id: req.query.id },
+    function (err, ad) {
+      var newRequest = new reqModel({
+        adId: req.query.id,
+        adTitle: ad[0].title,
+        adCrypto: ad[0].crypto,
+        posterName: ad[0].posterName,
+        posterId: ad[0].posterId,
+        userReqName: req.session.user.name,
+        userReqId: req.session.user._id,
       });
-  });
-  }
+      newRequest.save(
+        function (error, request) {
+          res.render('index', { dataAd: req.session.dataAd, IsLog: req.session.IsLog, user: req.session.user });
+        });
+    });
+}
 )
 
 // **************************** Supprimer la Request ****************************
-router.get('/delReq', function(req, res, next){
-    reqModel.remove(
-    {_id: req.query.id},
-    function(err) {});
-    reqModel.find(
-      {posterId: req.session.user._id},
-      function(err, myReqR){
-        req.session.myReqR = myReqR
-      res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
-      }
-)
+router.get('/delReq', function (req, res, next) {
+  reqModel.remove(
+    { _id: req.query.id },
+    function (err) { });
+  reqModel.find(
+    { posterId: req.session.user._id },
+    function (err, myReqR) {
+      req.session.myReqR = myReqR
+      res.render('myprofile', { user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR: req.session.myReqR });
+    }
+  )
 })
 // **************************** Acceptation request ****************************
-router.get('/acceptReq', function(req, res, next){
+router.get('/acceptReq', function (req, res, next) {
   reqModel.find(
-    {_id: req.query.id},
-    function(err, accReq) {
+    { _id: req.query.id },
+    function (err, accReq) {
       var newRequestAcc = new reqAccModel({
-         adId: accReq[0].adId,
-         posterName: accReq[0].posterName,
-         posterId: accReq[0].posterId,
-         userReqName: accReq[0].userReqName,
-         userReqId: accReq[0].userReqId,
+        adId: accReq[0].adId,
+        posterName: accReq[0].posterName,
+        posterId: accReq[0].posterId,
+        userReqName: accReq[0].userReqName,
+        userReqId: accReq[0].userReqId,
       });
       newRequestAcc.save(
-        function(error, requestAcc) {
+        function (error, requestAcc) {
           reqModel.remove(
-          {_id: req.query.id},
-          function(err) {
-          reqModel.find(
-            {posterId: req.session.user._id},
-            function(err, myReqR){
-              req.session.myReqR = myReqR
-            res.render('myprofile',{user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR:req.session.myReqR});
-              });
+            { _id: req.query.id },
+            function (err) {
+              reqModel.find(
+                { posterId: req.session.user._id },
+                function (err, myReqR) {
+                  req.session.myReqR = myReqR
+                  res.render('myprofile', { user: req.session.user, idUser: req.session.user._id, dataAd: req.session.myAds, reqR: req.session.myReqR });
+                });
             }
           )
         });
     });
 
-    }
-  )
+}
+)
 
 
 module.exports = router;

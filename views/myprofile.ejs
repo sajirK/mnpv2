@@ -172,23 +172,18 @@
            <%}%>
       </div>
       <div class="col-6">
-        <h2 class="text-center text-uppercase text-secondary mb-0">My request receive:</h2>
+        <h2 class="text-center text-uppercase text-secondary mb-0">Notifications :</h2>
         <hr class="star-dark mb-5">
         <%
-  for(var i=0; i<reqR.length; i++) {
-  %>
+            for(var i=0; i < reqR.length; i++) {
+         %>
         <div class="row">
           <div class="offset-1 col-10">
             <div class="card text-center">
               <div class="card-body">
-
-                <h5 class="card-title"><%=dataAd[i].title%></h5>
-                <p class="card-text"><%=dataAd[i].message%></p>
-
-
-                <h5 class="card-title"><%=reqR[i].userReqName%> want to reserve a seat</h5>
-                <p class="card-text">for <%=reqR[i].adCrypto%> MN.</p>
-                <p class="card-text">Ad: <%=reqR[i].adTitle%> .</p>
+                <h5 class="card-title"> You Received a request from <strong><%=reqR[i].userReqName%> </strong> </h5>
+                <p class="card-text">« title »</p>
+                <p class="card-text"><strong><%=reqR[i].userReqName%> </strong>is interested by your latest offre, contact him for more details</p>
                 <div class="row">
                   <div class="col-6">
                     <a href="/acceptReq?id=<%=reqR[i]._id%>" class="btn btn-primary">Accept</a>

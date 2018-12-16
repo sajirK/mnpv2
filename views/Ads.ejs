@@ -160,7 +160,7 @@ p {
           <h1 id="head">MNPooL</h1>
         </div>
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item mx-0 mx-lg-1">
+            <li class="nav-item mx-0 mx-lg-1">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/logout">Logout</a>
           </li>
         </ul>
@@ -170,14 +170,12 @@ p {
   <!-- Header Formulaire -->
   <section class="portfolio" id="portfolio">
     <div class="container" id="cardAdMarginTop">
-
-      <img class="avatarP" src="./images/<%=idUser%>.png">
-
+      <img class="avatarP" src="./images/<%=dataAd.posterId%>.png">
       <h4 class="text-center text-uppercase text-secondary mb-0">Ad informations</h4>
       <hr class="star-dark mb-5">
       <div class="row">
           <div class="offset-2 col-8">
-            <h5>Poster : <%=dataAd.posterName%></h5>
+            <h5>Poster name : <%=dataAd.posterName%></h5>
           </div>
         <div class="offset-2 col-8">
           <h5>Crypto : <%=dataAd.crypto%></h5>
@@ -187,7 +185,7 @@ p {
         </div>
         <div class="offset-2 col-8">
           <h5>Reserved :</h5>
-          <div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: <%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>%" aria-valuenow= "<%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>" aria-valuemin="0" aria-valuemax="<%=dataAd.NbSeat*10%>"><%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>%</div></div>
+          <div class="progress"><div class="progress-bar bg-success" role="progressbar" style="width: <%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>% " aria-valuenow= "<%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>" aria-valuemin="0" aria-valuemax="<%=dataAd.NbSeat*10%>"><%=100-((100/dataAd.NbSeat)*(dataAd.NbSeat-acceptReq.length))%>%</div></div>
         </div>
         <div class="offset-2 col-8">
           <h5>ROI : </h5>
@@ -196,19 +194,21 @@ p {
           <h5>Price : <%=dataAd.cryptoP%></h5>
         </div>
         <div class="offset-2 col-8">
-          <h5>Reserved seat:</h5>
+          <h5>Reserved seat: <%=dataAd.NbSeat-acceptReq.length%></h5>
         </div>
         </div>
+            <h5  style="padding-left: 191px;">the participations list : </h5>
+    
         <%
         for ( var i = 0; i < acceptReq.length; i++ ) {
           %>
         <div class="row">
           <div class="offset-2 col-8">
-          <h5>Seat <%=i+1%> : <%=acceptReq[i].userReqName%></h5>
+          <h5 style="padding-left: 30px;">- Seat <%=i+1%> : <%=acceptReq[i].userReqName%></h5>
           </div>
         </div>
         <%}%>
-        <h4 class="text-center text-uppercase text-secondary mb-0 margin-top">Poster message</h4>
+        <h4 class="text-center text-uppercase text-secondary mb-0 margin-top">Details</h4>
         <hr class="star-dark mb-5">
         <div class="row">
           <div class="offset-2 col-8" id="titleAd">
@@ -235,7 +235,7 @@ p {
 <!-- ********************* commentaaaaaires ************** -->
 
 <%
-for (var i=0; i<comments.length; i++) {
+for (var i=0; i < comments.length; i++) {
   %>
 <div class="comments">
 		<div class="comment-wrap">

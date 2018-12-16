@@ -1,25 +1,31 @@
 /* my profile img */
-.avatar{
+.avatar {
  border-radius: 50%;
 height: 100px;
 width: 100px;
 }
-.avatarP{
+.avatarP {
 margin-left: 100px;
 border-radius: 50%;
 height: 100px;
 width: 100px;
 }
+.avatarAd {
+  margin-right: 958px;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  }
 
 /* MNPool header */
-h1{
+h1 {
   color: white;
 }
 
-#head{
+#head {
   color: white;
 }
-h6{
+h6 {
   font-weight: 700;
 font-family: Montserrat;
 margin-top: 100px;
@@ -31,7 +37,6 @@ color: blue;
   float: right;
 }
 
-}
 body {
   font-family: 'Lato';
 }
@@ -41,7 +46,7 @@ body {
   width: 130px;
 }
 
-#mainLogo{
+#mainLogo {
   height: 200px;
   width: 200px;
   border-radius: 50%
@@ -52,7 +57,7 @@ body {
   width: 99vw;
 }
 
-#header{
+#header {
   margin: 0px;
 }
 
@@ -851,7 +856,6 @@ aside:hover ul li:nth-child(3) {
 #searchBar{
   margin-top: 40px;
 }
-
 .padding-left {
   padding-left: 90px;
 }
@@ -1141,5 +1145,5 @@ body {
 	}
 }
 #Compteur{
-  margin-left: : 100px;
+  margin-left: 100px;
 }

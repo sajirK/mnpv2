@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,7 +9,7 @@
          <!-- FontAwesome -->
          <link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
          <link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
-    <title>Home</title>
+    <title>MnPool</title>
          <script src="https://use.fontawesome.com/a7ec7986bf.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -123,13 +122,13 @@
         <hr class="star-dark mb-5">
         <div class="row">
           <div class="col-9">
-            <h3 id="Compteur" class="text-secondary mb-0"><%=dataAd.length%> ads online</h3>
+            <h3 id="Compteur" style="margin-left: 95px"  class="text-secondary mb-0"><%=dataAd.length%> ads online</h3>
           </div>
           <%
           if (IsLog == true) {
             %>
           <div class="col-3">
-            <a class="btn btn-dark" href="/postAds">New</a>
+            <a class="btn btn-dark" style="margin-right: 90px" href="/postAds">Post a new add +</a>
             </div>
             <%}%>
           </div>
@@ -137,13 +136,12 @@
     <div class="offset-1 col-4 padding-left" >
              <form class="form" action="/search" method="post">
              <input type="text" name="search" class="btn btn-outline-dark" value="" placeholder="Search ads">
-             <button type="submit" class="btn btn-dark" name="btnSearch">Valid</button>
+             <button type="submit" class="btn btn-dark" name="btnSearch">Search</button>
           </form>
     </div>
       </div>
-
         <%
-  for(var i=0; i<dataAd.length; i++) {
+  for(var i=0; i < dataAd.length; i++) {
   %>
         <div class="row">
           <div class="offset-1 col-10">
@@ -151,10 +149,10 @@
               <div class="card-header">
                 <div class="row">
                 <div class="col-3">
-                  Crypto
+                  Crypto currency
                 </div>
                 <div class="col-3">
-                  Seat
+                  Number of seats
                 </div>
                 <div class="col-3">
                   ROI
@@ -173,7 +171,7 @@
                   <%=dataAd[i].NbSeat%>
                 </div>
                 <div class="col-3">
-                  248%
+                  120%
                 </div>
                 <div class="col-3">
                   <%=dataAd[i].cryptoP*1600%>$
@@ -181,21 +179,21 @@
                 </div>
                 </div>
               </div>
-              <a href="/cardAds?id=<%=dataAd[i]._id%>">
               <div class="card-body">
+                  <img class="avatarAd" src="./images/<%=dataAd[i].posterId%>.png">
+                  <a href="/cardAds?id=<%=dataAd[i]._id%>">
                 <h5 class="card-title"><%=dataAd[i].title%></h5>
+              </a>
                 <p class="card-text"><%=dataAd[i].message%></p>
                 <%
                 if (IsLog == true) {
                   %>
-                <a href="/sendReq?id=<%=dataAd[i]._id%>" class="btn btn-primary">Reserve</a>
+                <a href="/sendReq.id=<%=dataAd[i]._id%>" class="btn btn-primary">Reserve</a>
                 <%}%>
               </div>
-              </a>
+              
               <div class="card-footer text-muted">
-
                 Posted by <strong> <%=dataAd[i].posterName%> </strong> at <%=dataAd[i].dateAnnonce%>
-
               </div>
             </div>
           </div>
