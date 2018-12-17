@@ -9,7 +9,7 @@
          <!-- FontAwesome -->
          <link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
          <link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
-    <title>MnPool</title>
+    <title>Home</title>
          <script src="https://use.fontawesome.com/a7ec7986bf.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -36,9 +36,7 @@
           Menu
           <i class="fa fa-bars"></i>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarResponsive">
-
           <%
           if(IsLog != true ) {
           %>
@@ -188,7 +186,7 @@
                 <%
                 if (IsLog == true) {
                   %>
-                <a href="/sendReq.id=<%=dataAd[i]._id%>" class="btn btn-primary">Reserve</a>
+                <a href="/sendReq?id=<%=dataAd[i]._id%>" class="btn btn-primary">Reserve</a>
                 <%}%>
               </div>
               
